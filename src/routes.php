@@ -1,9 +1,9 @@
 <?php
-use App\Controller\Quiz;
+use App\Controller\QuizController;
 // Routes
 
-$app->get('/login-callback', 'App\Controller\FacebookConnect:callback')->setName('login-callback');
-$app->get('/login', 'App\Controller\FacebookConnect:login')->setName('login');
+$app->get('/login-callback', 'App\Controller\AuthController:callback')->setName('login-callback');
+$app->get('/login', 'App\Controller\AuthController:login')->setName('login');
 
-$app->get('/', 'App\Controller\Quiz:index')->setName('home');
-$app->post('/', 'App\Controller\Quiz:submit');
+$app->get('/', 'App\Controller\QuizController:index')->setName('home');
+$app->post('/', 'App\Controller\QuizController:submit');

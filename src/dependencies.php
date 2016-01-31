@@ -50,7 +50,7 @@ $container['facebook'] = function ($c)
     
     $settings = $c->get('settings')['facebook'];
     
-    $connect = new Connect(settings, $session, $logger);
+    $connect = new Connect($settings, $session, $logger);
     
     return $connect;
 };

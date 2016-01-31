@@ -30,6 +30,7 @@ return [
         
         "facebook-permissions" => [
             'email',
+            'publish_actions',
             'user_likes'
         ],
         

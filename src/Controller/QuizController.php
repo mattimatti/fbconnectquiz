@@ -10,7 +10,7 @@ use Slim\Router;
 use App\Helper\Session;
 use App\Quiz\QuizService;
 
-final class Quiz
+final class QuizController
 {
 
     private $view;

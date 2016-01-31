@@ -37,7 +37,8 @@ class Connect
     function __construct(array $settings = array(), $session, $logger)
     {
         $this->session = $session;
-        $this->facebook = new Facebook\Facebook($settings);
+        $this->facebook = new \Facebook\Facebook($settings);
+        $this->logger = $logger;
     }
 
     /**

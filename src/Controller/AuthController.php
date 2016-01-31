@@ -13,7 +13,7 @@ use RedBeanPHP;
 use App\Helper\Session;
 use App\Facebook\Connect;
 
-final class FacebookConnect
+final class AuthController
 {
 
     private $view;
@@ -78,16 +78,16 @@ final class FacebookConnect
      */
     public function login(Request $request, Response $response, $args)
     {
-        $helper = $this->facebook->getRedirectLoginHelper();
+//         $helper = $this->facebook->getRedirectLoginHelper();
         
-        $permissions = $this->settings['facebook-permissions'];
-        $baseDomain = $this->settings['baseDomain'];
+//         $permissions = $this->settings['facebook-permissions'];
+//         $baseDomain = $this->settings['baseDomain'];
         
-        $loginUrl = $helper->getLoginUrl($baseDomain . '/login-callback', $permissions);
+//         $loginUrl = $helper->getLoginUrl($baseDomain . '/login-callback', $permissions);
         
-        $view['loginUrl'] = $loginUrl;
+//         $view['loginUrl'] = $loginUrl;
         
-        $this->view->render($response, 'login.twig', $view);
+        $this->view->render($response, 'login.twig');
         return $response;
     }
 }
