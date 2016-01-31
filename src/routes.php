@@ -2,10 +2,10 @@
 // Routes
 
 
-$app->get('/', 'App\Facebook\LoginAction:login')
+$app->get('/', 'App\Facebook\LoginAction:intent')
     ->setName('login');
 
-$app->get('/login-callback', 'App\Facebook\LoginAction:loginCallback')
+$app->get('/login-callback', 'App\Facebook\LoginAction:callback')
     ->setName('login-callback');
 
 

@@ -36,59 +36,65 @@ final class LoginAction
         $this->settings = $container->get('settings');
     }
 
-    
     /**
-     * 
-     * @param Request $request
-     * @param Response $response
-     * @param unknown $args
+     *
+     * @param Request $request            
+     * @param Response $response            
+     * @param unknown $args            
      */
-    public function loginCallback(Request $request, Response $response, $args)
-    {}
-
-    
-    
-    /**
-     * 
-     * @param Request $request
-     * @param Response $response
-     * @param unknown $args
-     * @return Response
-     */
-    public function login(Request $request, Response $response, $args)
+    public function callback(Request $request, Response $response, $args)
     {
         $helper = $this->facebook->getRedirectLoginHelper();
         
-        $permissions = [
-            'email',
-            'user_likes'
-        ]; // optional
-        $loginUrl = $helper->getLoginUrl('http://{your-website}/login-callback', $permissions);
+        try {
+            $accessToken = $helper->getAccessToken();
+        } catch (FacebookResponseException $e) {
+            
+            $this->view->render($response, 'login-error.twig');
+            return $response;
+            
+            // When Graph returns an error
+            echo 'Graph returned an error: ' . $e->getMessage();
+            exit();
+        } catch (FacebookSDKException $e) {
+            
+            $this->view->render($response, 'login-error.twig');
+            return $response;
+            
+            // When validation fails or other local issues
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            exit();
+        }
         
-        echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
+        if (isset($accessToken)) {
+            // Logged in!
+            $_SESSION['facebook_access_token'] = (string) $accessToken;
+            
+            // Now you can redirect to another page and use the
+            // access token from $_SESSION['facebook_access_token']
+        }
+    }
+
+    /**
+     * Init the login action
+     *
+     * @param Request $request            
+     * @param Response $response            
+     * @param unknown $args            
+     * @return Response
+     */
+    public function intent(Request $request, Response $response, $args)
+    {
+        $helper = $this->facebook->getRedirectLoginHelper();
         
-        // try {
-        // // Get the Facebook\GraphNodes\GraphUser object for the current user.
-        // // If you provided a 'default_access_token', the '{access-token}' is optional.
+        $permissions = $this->settings['facebook']['permissions'];
+        $baseDomain = $this->settings['baseDomain'];
         
-        // $response = $this->facebook->get('/me');
+        $loginUrl = $helper->getLoginUrl($baseDomain .'/login-callback', $permissions);
         
-        // } catch (FacebookResponseException $e) {
-        // // When Graph returns an error
-        // echo 'Graph returned an error: ' . $e->getMessage();
-        // exit();
-        // } catch (FacebookSDKException $e) {
-        // // When validation fails or other local issues
-        // echo 'Facebook SDK returned an error: ' . $e->getMessage();
-        // exit();
-        // }
+        $view['loginUrl'] = $loginUrl;
         
-        // $me = $response->getGraphUser();
-        // echo 'Logged in as ' . $me->getName();
-        
-        $this->logger->info("Home page action dispatched");
-        
-        //$this->view->render($response, 'index.twig');
+        $this->view->render($response, 'login.twig', $view);
         return $response;
     }
 }

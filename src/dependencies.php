@@ -2,12 +2,6 @@
 // DIC configuration
 $container = $app->getContainer();
 
-// // view renderer
-// $container['view'] = function ($c) {
-// $settings = $c->get('settings')['view'];
-// return new Slim\Views\PhpRenderer($settings['template_path']);
-// };
-
 // Twig
 $container['view'] = function ($c)
 {
