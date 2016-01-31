@@ -1,4 +1,5 @@
 <?php
+use App\Helper\Session;
 // DIC configuration
 $container = $app->getContainer();
 
@@ -44,6 +45,11 @@ $container['facebook'] = function ($c)
     // $helper = $fb->getPageTabHelper();
     
     return $facebook;
+};
+
+
+$container['session'] = function($c){
+    return new Session();
 };
 
 

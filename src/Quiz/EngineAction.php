@@ -7,15 +7,15 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Monolog\Logger;
 use Slim\Router;
+use App\Helper\Session;
 
 final class EngineAction
 {
 
     private $view;
 
-    
     /**
-     * 
+     *
      * @var Router
      */
     private $router;
@@ -25,6 +25,12 @@ final class EngineAction
      * @var Logger
      */
     private $logger;
+
+    /**
+     *
+     * @var Session
+     */
+    private $session;
 
     /**
      *
@@ -38,15 +44,16 @@ final class EngineAction
         $this->router = $container->get('router');
         $this->logger = $container->get('logger');
         $this->settings = $container->get('settings');
+        $this->session = $container->get('session');
     }
 
     public function index(Request $request, Response $response, $args)
     {
-        $this->logger->debug('ACCESS TOKEN IS : ' . $_SESSION['facebook_access_token']);
+        $this->logger->debug('entrain home');
+        $this->logger->debug('session : ' . print_r($_SESSION, 1));
         
-        if (! isset($_SESSION['facebook_access_token'])) {
-            exit('merda');
-//            return $response->withRedirect($this->router->pathFor('login'));
+        if (!$this->session->get('facebook_access_token')) {
+            return $response->withRedirect($this->router->pathFor('login'));
         }
         
         return $this->view->render($response, 'index.twig', $args);

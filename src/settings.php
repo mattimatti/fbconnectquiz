@@ -23,15 +23,15 @@ return [
         
         // Facebook Api settings
         'facebook' => [
-            "app_id" => "126680937488146",
-            "app_secret" => "47011911ec9b48a02d3619611d788dbe",
-            "default_graph_version" => "v2.5",
-            "tab_url" => "https://www.facebook.com/pages/Loophole/306971553786?sk=app_126680937488146",
-            "host" => "slim-ar-facebook.taevas.com",
-            "permissions" => [
-                'email',
-                'user_likes'
-            ]
+            "app_id" => "634642500001239",
+            "app_secret" => "bb932950d2bf8ad84de3b115161fb138",
+            "default_graph_version" => "v2.5"
+        ],
+        
+        "facebook-permissions" => [
+            'email',
+            'user_likes'
         ]
     ]
+    
 ];

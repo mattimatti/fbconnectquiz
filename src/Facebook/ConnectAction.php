@@ -10,8 +10,9 @@ use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Exceptions\FacebookResponseException;
 use Monolog\Logger;
 use RedBeanPHP;
+use App\Helper\Session;
 
-final class LoginAction
+final class ConnectAction
 {
 
     private $view;
@@ -21,6 +22,12 @@ final class LoginAction
      * @var Logger
      */
     private $logger;
+
+    /**
+     *
+     * @var Session
+     */
+    private $session;
 
     /**
      *
@@ -41,6 +48,7 @@ final class LoginAction
         $this->logger = $container->get('logger');
         $this->facebook = $container->get('facebook');
         $this->settings = $container->get('settings');
+        $this->session = $container->get('session');
     }
 
     /**
@@ -51,30 +59,31 @@ final class LoginAction
      */
     public function callback(Request $request, Response $response, $args)
     {
-        $helper = $this->facebook->getRedirectLoginHelper();
-        
-        $accessToken = null;
+        $helper = $this->facebook->getJavaScriptHelper();
         
         try {
             
             $accessToken = $helper->getAccessToken();
-            $this->logger->debug('Got new access token! : ' . $accessToken);
-            
         } catch (FacebookResponseException $e) {
             $this->logger->error('error: ' . $e->getMessage());
         } catch (FacebookSDKException $e) {
             // When validation fails or other local issues
             $this->logger->error('Facebook SDK returned an error: ' . $e->getMessage());
         }
-        
-            
+        if (! isset($accessToken)) {
+            $this->logger->error('No cookie set or no OAuth data could be obtained from cookie.');
+        }else {
+            $this->logger->debug('Got new access token! : ' . $accessToken);
             $this->logger->debug('Store access token : ' . $accessToken);
             
-            $_SESSION['facebook_access_token'] = $accessToken;
+            $this->session->set('facebook_access_token', (string) $accessToken);
             
             $this->logger->debug('Stored access token is : ' . $_SESSION['facebook_access_token']);
+            
+            return $response->withRedirect($this->router->pathFor('home'));
+        }
         
-        return $response->withRedirect($this->router->pathFor('home'));
+        return $response->withRedirect($this->router->pathFor('login'));
     }
 
     /**
@@ -85,11 +94,11 @@ final class LoginAction
      * @param unknown $args            
      * @return Response
      */
-    public function intent(Request $request, Response $response, $args)
+    public function login(Request $request, Response $response, $args)
     {
         $helper = $this->facebook->getRedirectLoginHelper();
         
-        $permissions = $this->settings['facebook']['permissions'];
+        $permissions = $this->settings['facebook-permissions'];
         $baseDomain = $this->settings['baseDomain'];
         
         $loginUrl = $helper->getLoginUrl($baseDomain . '/login-callback', $permissions);
