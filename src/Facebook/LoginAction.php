@@ -8,12 +8,18 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Facebook\Facebook;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Exceptions\FacebookResponseException;
+use Monolog\Logger;
+use RedBeanPHP;
 
 final class LoginAction
 {
 
     private $view;
 
+    /**
+     *
+     * @var Logger
+     */
     private $logger;
 
     /**
@@ -31,6 +37,7 @@ final class LoginAction
     public function __construct(\Slim\Container $container)
     {
         $this->view = $container->get('view');
+        $this->router = $container->get('router');
         $this->logger = $container->get('logger');
         $this->facebook = $container->get('facebook');
         $this->settings = $container->get('settings');
@@ -46,33 +53,28 @@ final class LoginAction
     {
         $helper = $this->facebook->getRedirectLoginHelper();
         
+        $accessToken = null;
+        
         try {
+            
             $accessToken = $helper->getAccessToken();
+            $this->logger->debug('Got new access token! : ' . $accessToken);
+            
         } catch (FacebookResponseException $e) {
-            
-            $this->view->render($response, 'login-error.twig');
-            return $response;
-            
-            // When Graph returns an error
-            echo 'Graph returned an error: ' . $e->getMessage();
-            exit();
+            $this->logger->error('error: ' . $e->getMessage());
         } catch (FacebookSDKException $e) {
-            
-            $this->view->render($response, 'login-error.twig');
-            return $response;
-            
             // When validation fails or other local issues
-            echo 'Facebook SDK returned an error: ' . $e->getMessage();
-            exit();
+            $this->logger->error('Facebook SDK returned an error: ' . $e->getMessage());
         }
         
-        if (isset($accessToken)) {
-            // Logged in!
-            $_SESSION['facebook_access_token'] = (string) $accessToken;
             
-            // Now you can redirect to another page and use the
-            // access token from $_SESSION['facebook_access_token']
-        }
+            $this->logger->debug('Store access token : ' . $accessToken);
+            
+            $_SESSION['facebook_access_token'] = $accessToken;
+            
+            $this->logger->debug('Stored access token is : ' . $_SESSION['facebook_access_token']);
+        
+        return $response->withRedirect($this->router->pathFor('home'));
     }
 
     /**
@@ -90,7 +92,7 @@ final class LoginAction
         $permissions = $this->settings['facebook']['permissions'];
         $baseDomain = $this->settings['baseDomain'];
         
-        $loginUrl = $helper->getLoginUrl($baseDomain .'/login-callback', $permissions);
+        $loginUrl = $helper->getLoginUrl($baseDomain . '/login-callback', $permissions);
         
         $view['loginUrl'] = $loginUrl;
         
