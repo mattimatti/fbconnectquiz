@@ -1,7 +1,4 @@
-body {
-	font-family: 'Lato', sans-serif;
-}
-
-h1,h2,h3,h4,h5 {
-	font-family: 'Montserrat', sans-serif;
-}
+@import url("/bower_components/bootstrap/dist/css/bootstrap.min.css");
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+@import url("https://fonts.googleapis.com/css?family=Lato:300");
+@import url("typography.css");
