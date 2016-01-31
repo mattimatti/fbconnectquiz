@@ -1,4 +1,27 @@
 @import url("/bower_components/bootstrap/dist/css/bootstrap.min.css");
+
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
+
 @import url("https://fonts.googleapis.com/css?family=Lato:300");
+
 @import url("typography.css");
+
+
+@media(max-width:767px){	
+	.selection-img {
+		max-height: 100px;
+	}
+	
+}
+@media(min-width:768px){
+	.selection-img {
+		max-height: 160px;
+	}
+}
+@media(min-width:992px){
+	.selection-img {
+		max-height: 160px;
+	}
+}
+
+@media(min-width:1200px){}

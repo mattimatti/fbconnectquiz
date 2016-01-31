@@ -16,7 +16,7 @@
 		{% for answer in quiz.answers %}
 		<div class="col-xs-4" >
 		  <a data-val="{{ answer.image }}" href="#" class="selection thumbnail">
-			<img  src="/themes/starwars/images/{{ answer.image }}" style="max-height:100px" class="img-rounded" alt="{{ answer.title }}">
+			<img  src="/themes/starwars/images/{{ answer.image }}" class="selection-img" alt="{{ answer.title }}">
 			<div class="text-center">
 				<strong>{{ answer.title }}</strong>{{ answer.text }}
 			</div>
