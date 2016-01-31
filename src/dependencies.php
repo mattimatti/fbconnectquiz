@@ -1,11 +1,17 @@
 <?php
 use App\Helper\Session;
+use App\Quiz\Service;
+use App\Quiz\QuizService;
+use RedBeanPHP\R;
+use RedBeanPHP\OODB;
+use App\Facebook\Connect;
 // DIC configuration
 $container = $app->getContainer();
 
 // Twig
 $container['view'] = function ($c)
 {
+    
     $settings = $c->get('settings');
     $view = new \Slim\Views\Twig($settings['view']['template_path'], $settings['view']['twig']);
     // Add extensions
@@ -15,11 +21,11 @@ $container['view'] = function ($c)
     return $view;
 };
 
-// Flash messages
-$container['flash'] = function ($c)
-{
-    return new \Slim\Flash\Messages();
-};
+// // Flash messages
+// $container['flash'] = function ($c)
+// {
+// return new \Slim\Flash\Messages();
+// };
 
 // monolog
 $container['logger'] = function ($c)
@@ -31,26 +37,43 @@ $container['logger'] = function ($c)
     return $logger;
 };
 
+$container['session'] = function ($c)
+{
+    return new Session();
+};
+
 // facebook service
 $container['facebook'] = function ($c)
 {
+    $logger = $c->get('logger');
+    $session = $c->get('session');
     
     $settings = $c->get('settings')['facebook'];
-    $facebook = new Facebook\Facebook($settings);
     
-    // Use one of the helper classes to get a Facebook\Authentication\AccessToken entity.
-    // $helper = $fb->getRedirectLoginHelper();
-    // $helper = $fb->getJavaScriptHelper();
-    // $helper = $fb->getCanvasHelper();
-    // $helper = $fb->getPageTabHelper();
+    $connect = new Connect(settings, $session, $logger);
     
-    return $facebook;
+    return $connect;
 };
 
-
-$container['session'] = function($c){
-    return new Session();
+$container['quiz'] = function ($c)
+{
+    return new QuizService();
 };
+
+$container['db'] = function ($c)
+{
+    
+    $settings = $c->get('settings')['db'];
+    
+    OODB::autoClearHistoryAfterStore(TRUE);
+    define('REDBEAN_MODEL_PREFIX', '\\App\\Model\\');
+    
+    R::setup('mysql:host=' . $settings['host'] . ';dbname=' . $settings['dbname'], $settings['username'], $settings['password']);
+    
+    // NEVER REMOVE THIS!
+    R::freeze(true);
+};
+
 
 
 

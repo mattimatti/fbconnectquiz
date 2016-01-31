@@ -1,5 +1,31 @@
-{% extends "layout.twig" %}
+{% extends "layout.twig" %} {% block content %}
 
-{% block content %}
-Index
+
+<!-- Block Question  -->
+
+<div class="text-center">
+	<h1>{{ quiz.question.title }}</h1>
+</div>
+
+<!-- Block Answers -->
+<hr />
+
+<form id="quizform" method="post">
+    <input name="selection" id="selection" value="" />
+	<div class="row">
+		{% for answer in quiz.answers %}
+		<div class="col-md-2" >
+		  <a data-val="{{ answer.image }}" href="#" class="selection">
+			<img  src="/themes/starwars/images/{{ answer.image }}" class="img-responsive img-circle" alt="Responsive image">
+			<div class="text-center">
+				<strong>{{ answer.title }}</strong>{{ answer.text }}
+			</div>
+		  </a>
+		</div>
+		{% endfor %}
+	</div>
+</form>
+
+<hr />
+
 {% endblock %}

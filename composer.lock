@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a12de3ef5fda3eb376db237adfe02dfa",
-    "content-hash": "7b330cfc20d366bd47526429558150d7",
+    "hash": "65aa3f21b1789b21bae0f4a9ffe2b9bc",
+    "content-hash": "88e901d048d80e4e8ae93b9d22f8c477",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -91,16 +91,16 @@
         },
         {
             "name": "gabordemooij/redbean",
-            "version": "v4.3.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gabordemooij/redbean.git",
-                "reference": "f1f572ddac226d047d730444927794321ee9aca6"
+                "reference": "621b14a3ab694cb116175ca27345ddbc47624fda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gabordemooij/redbean/zipball/f1f572ddac226d047d730444927794321ee9aca6",
-                "reference": "f1f572ddac226d047d730444927794321ee9aca6",
+                "url": "https://api.github.com/repos/gabordemooij/redbean/zipball/621b14a3ab694cb116175ca27345ddbc47624fda",
+                "reference": "621b14a3ab694cb116175ca27345ddbc47624fda",
                 "shasum": ""
             },
             "require": {
@@ -128,7 +128,7 @@
             "keywords": [
                 "orm"
             ],
-            "time": "2015-12-28 19:46:34"
+            "time": "2016-01-23 19:23:47"
         },
         {
             "name": "monolog/monolog",
@@ -614,7 +614,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "gabordemooij/redbean": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

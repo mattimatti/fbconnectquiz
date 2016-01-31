@@ -1,5 +1,5 @@
 <?php
-namespace App\Quiz;
+namespace App\Controller;
 
 use Slim\Views\Twig;
 use Psr\Log\LoggerInterface;
@@ -8,8 +8,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Monolog\Logger;
 use Slim\Router;
 use App\Helper\Session;
+use App\Quiz\QuizService;
 
-final class EngineAction
+final class Quiz
 {
 
     private $view;
@@ -25,6 +26,12 @@ final class EngineAction
      * @var Logger
      */
     private $logger;
+
+    /**
+     *
+     * @var QuizService
+     */
+    private $quiz;
 
     /**
      *
@@ -45,6 +52,14 @@ final class EngineAction
         $this->logger = $container->get('logger');
         $this->settings = $container->get('settings');
         $this->session = $container->get('session');
+        $this->quiz = $container->get('quiz');
+    }
+
+    public function submit(Request $request, Response $response, $args)
+    {
+//         $this->logger->debug(print_r($request, true));
+        print_r($_POST);
+        exit();
     }
 
     public function index(Request $request, Response $response, $args)
@@ -52,10 +67,15 @@ final class EngineAction
         $this->logger->debug('entrain home');
         $this->logger->debug('session : ' . print_r($_SESSION, 1));
         
-        if (!$this->session->get('facebook_access_token')) {
+        if (! $this->session->get('facebook_access_token')) {
             return $response->withRedirect($this->router->pathFor('login'));
         }
         
-        return $this->view->render($response, 'index.twig', $args);
+        $data = $this->quiz->getOptions();
+        
+        // print_r($data);
+        // exit();
+        
+        return $this->view->render($response, 'index.twig', $data);
     }
 }

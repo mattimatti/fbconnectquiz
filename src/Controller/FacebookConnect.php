@@ -1,5 +1,5 @@
 <?php
-namespace App\Facebook;
+namespace App\Controller;
 
 use Slim\Views\Twig;
 use Psr\Log\LoggerInterface;
@@ -11,8 +11,9 @@ use Facebook\Exceptions\FacebookResponseException;
 use Monolog\Logger;
 use RedBeanPHP;
 use App\Helper\Session;
+use App\Facebook\Connect;
 
-final class ConnectAction
+final class FacebookConnect
 {
 
     private $view;
@@ -37,7 +38,7 @@ final class ConnectAction
 
     /**
      *
-     * @var Facebook
+     * @var Connect
      */
     private $facebook;
 
@@ -59,27 +60,8 @@ final class ConnectAction
      */
     public function callback(Request $request, Response $response, $args)
     {
-        $helper = $this->facebook->getJavaScriptHelper();
         
-        try {
-            
-            $accessToken = $helper->getAccessToken();
-        } catch (FacebookResponseException $e) {
-            $this->logger->error('error: ' . $e->getMessage());
-        } catch (FacebookSDKException $e) {
-            // When validation fails or other local issues
-            $this->logger->error('Facebook SDK returned an error: ' . $e->getMessage());
-        }
-        if (! isset($accessToken)) {
-            $this->logger->error('No cookie set or no OAuth data could be obtained from cookie.');
-        }else {
-            $this->logger->debug('Got new access token! : ' . $accessToken);
-            $this->logger->debug('Store access token : ' . $accessToken);
-            
-            $this->session->set('facebook_access_token', (string) $accessToken);
-            
-            $this->logger->debug('Stored access token is : ' . $_SESSION['facebook_access_token']);
-            
+        if($this->facebook->getAccessToken()){
             return $response->withRedirect($this->router->pathFor('home'));
         }
         

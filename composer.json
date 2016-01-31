@@ -21,7 +21,7 @@
         "slim/slim": "~3.0",
         "slim/php-view": "^2.0",
         "monolog/monolog": "^1.17",
-        "gabordemooij/redbean": "^4.3",
+        "gabordemooij/redbean": "dev-master",
         "facebook/php-sdk-v4": "^5.1",
         "slim/twig-view": "^2.0"
     }

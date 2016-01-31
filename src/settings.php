@@ -31,7 +31,13 @@ return [
         "facebook-permissions" => [
             'email',
             'user_likes'
+        ],
+        
+        "db" => [
+            'host' => 'localhost',
+            'dbname' => 'quiz',
+            'username' => 'root',
+            'password' => ''
         ]
     ]
-    
 ];

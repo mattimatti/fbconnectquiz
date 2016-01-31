@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <html>
 <head>
 <meta charset="utf-8" />
@@ -5,6 +8,9 @@
 <link href='/themes/blank/css/styles.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
-{% block content %} {% endblock %}
+	<div class="container">{% block content %} {% endblock %}</div>
+	<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="/bower_components/underscore/underscore-min.js"></script>
+	<script type="text/javascript" src="/themes/starwars/js/app.js"></script>
 </body>
 </html>
