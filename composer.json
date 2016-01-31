@@ -1,0 +1,29 @@
+{
+    "name": "mattimatti/fbconnectquiz",
+    "description": "Skelton Application to cerate facebook connect applications",
+    "keywords": ["microframework","facebook","oauth"],
+    "homepage": "http://github.com/mattimatti/fbconnectquiz",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matteo Monti",
+            "email": "mmonti@gmail.com",
+            "homepage": "http://www.mattimatti.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src"
+        }
+    },
+    "require": {
+        "php": ">=5.5.0",
+        "slim/slim": "~3.0",
+        "slim/php-view": "^2.0",
+        "monolog/monolog": "^1.17",
+        "gabordemooij/redbean": "^4.3",
+        "facebook/php-sdk-v4": "^5.1",
+        "twbs/bootstrap": "^3.3",
+        "slim/twig-view": "^2.0"
+    }
+}
