@@ -11,6 +11,11 @@ use App\Helper\Session;
 use App\Quiz\QuizService;
 use App\Facebook\Connect;
 
+/**
+ *
+ * @author mattimatti
+ *        
+ */
 final class QuizController
 {
 
@@ -118,8 +123,6 @@ final class QuizController
                 $profile = $this->facebook->retriveProfile();
                 
                 $friends = $this->facebook->retriveFriends();
-                
-                
             } catch (\Exception $ex) {
                 
                 $this->logger->error($ex->getMessage());

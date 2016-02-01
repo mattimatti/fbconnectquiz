@@ -13,6 +13,11 @@ use RedBeanPHP;
 use App\Helper\Session;
 use App\Facebook\Connect;
 
+/**
+ *
+ * @author mattimatti
+ *        
+ */
 final class AuthController
 {
 
