@@ -1,11 +1,31 @@
 {% extends "layout.twig" %} {% block content %}
 
+{# <div class="logout text-center">#}
+{# {% include "components/button-logout.twig" %}#}
+{# </div>#}
+
+
+
+
+
 
 <!-- Block Question  -->
 
 <div class="text-center">
 	<h1>{{ quiz.question.title }}</h1>
 </div>
+
+<hr />
+
+
+{% include "components/selected-item.twig" %}
+
+<hr />
+
+{% include "components/next-action.twig" %}
+
+
+{% if not selecteditem %}
 
 <!-- Block Answers -->
 <hr />
@@ -14,18 +34,13 @@
     <input type="hidden" name="selection" id="selection" value="" />
 	<div class="row">
 		{% for answer in quiz.answers %}
-		<div class="col-xs-4" >
-		  <a data-val="{{ answer.image }}" href="#" class="selection thumbnail">
-			<img  src="/themes/starwars/images/{{ answer.image }}" class="selection-img" alt="{{ answer.title }}">
-			<div class="text-center">
-				<strong>{{ answer.title }}</strong>{{ answer.text }}
-			</div>
-		  </a>
-		</div>
+			{% include "components/item.twig" %}
 		{% endfor %}
 	</div>
 </form>
 
 <hr />
+
+{% endif %}
 
 {% endblock %}

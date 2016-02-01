@@ -86,10 +86,21 @@ class Connect
      */
     public function retriveProfile()
     {
+        
         // Returns a `Facebook\FacebookResponse` object
-        $response = $this->facebook->get('/me?fields=id,name', $this->getAccessToken());
+        $response = $this->facebook->get("/me?fields=id,name", $this->getAccessToken());
+        
+        $this->logger->debug(print_r($response, 1));
+//         print_r($response);
+//         exit();
+        
+        
         $this->user = $response->getGraphUser();
         
+        $this->logger->debug(print_r($this->user, 1));
+        
+//         print_r($this->user);
+//         exit();
         return $this->user;
     }
 

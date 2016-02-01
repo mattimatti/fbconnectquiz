@@ -1,27 +1,98 @@
 @import url("/bower_components/bootstrap/dist/css/bootstrap.min.css");
-
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
-
 @import url("https://fonts.googleapis.com/css?family=Lato:300");
-
 @import url("typography.css");
 
+.mt30 {
+	margin-top: 30px;
+	display: block;
+}
 
-@media(max-width:767px){	
-	.selection-img {
-		max-height: 100px;
+
+.mt50 {
+	margin-top: 50px;
+	display: block;
+}
+
+
+
+.box {
+	overflow: hidden;
+	text-decoration: none;
+}
+
+.box a {
+	text-decoration: none;
+	background-color: gray;
+	color: white;
+	padding-top: 30px;
+}
+
+.box img {
+	height: 230px;
+}
+
+
+
+/* ********  LOGIN ***************/
+
+.login {
+	margin-top: 60%;
+}
+
+
+.logout {
+	margin-top: 5%;
+}
+
+
+
+@media ( max-width :400px) {
+	.box a {
+		height: 650px;
+		min-height: 650px;
+	}
+}
+
+@media ( max-width :767px) {
+	.box a {
+		height: 450px;
+		min-height: 450px;
+	}
+}
+
+@media ( min-width :768px) {
+	.box a {
+		height: 450px;
+		min-height: 450px;
+	}
+}
+
+@media ( min-width :992px) {
+	.box a {
+		height: 400px;
+		min-height: 400px;
 	}
 	
-}
-@media(min-width:768px){
-	.selection-img {
-		max-height: 160px;
-	}
-}
-@media(min-width:992px){
-	.selection-img {
-		max-height: 160px;
+	.login {
+		margin-top: 40%;
 	}
 }
 
-@media(min-width:1200px){}
+@media ( min-width :1200px) {
+	.login {
+		margin-top: 40%;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,16 +1,1 @@
-<a class="btn btn-info" href="#" onClick="logInWithFacebook()">Log In with the JavaScript SDK</a>
-
-<script>
-  logInWithFacebook = function() {
-    FB.login(function(response) {
-      if (response.authResponse) {
-        window.location.href='/login-callback';
-      } else {
-        alert('User cancelled login or did not fully authorize.');
-      }
-    });
-    return false;
-  };
-</script>
-
-
+<a class="btn btn-info btn-lg login-btn" href="#" >Log In with the JavaScript SDK</a>
