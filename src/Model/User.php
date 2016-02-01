@@ -14,8 +14,7 @@ class User extends SimpleModel
      */
     public static function upsert($payload)
     {
-        
-        // R::freeze(false);
+        R::freeze(false);
         
         // change the id into fbid.
         $payload['fbid'] = $payload['id'];

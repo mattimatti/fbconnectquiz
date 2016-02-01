@@ -82,7 +82,7 @@ final class QuizController
     {
         $selected = $_POST['selection'];
         
-        $this->viewData['quiz'] = $this->quiz->getOptions();
+        $this->viewData['quiz'] = $this->quiz->getOptions(1);
         
         if (isset($_POST['selection'])) {
             $selectedAnswer = $this->quiz->getAnswer(1, $selected);
@@ -123,6 +123,7 @@ final class QuizController
                 $profile = $this->facebook->retriveProfile();
                 
                 $friends = $this->facebook->retriveFriends();
+                
             } catch (\Exception $ex) {
                 
                 $this->logger->error($ex->getMessage());
@@ -131,7 +132,7 @@ final class QuizController
             }
         }
         
-        $this->viewData['quiz'] = $this->quiz->getOptions();
+        $this->viewData['quiz'] = $this->quiz->getOptions(1);
         
         return $this->view->render($response, 'index.twig', $this->viewData);
     }
