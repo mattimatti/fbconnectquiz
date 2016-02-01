@@ -7,6 +7,8 @@ use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Exceptions\FacebookResponseException;
 use Monolog\Logger;
 use Facebook\FacebookRequest;
+use RedBeanPHP\R;
+use App\Model\User;
 
 class Connect
 {
@@ -91,7 +93,14 @@ class Connect
         $this->user = $response->getGraphUser();
         $this->logger->debug('retriveProfile found id: ' . $this->user['id']);
         
+        $this->upsertUser($this->user);
+        
         return $this->user;
+    }
+
+    public function upsertUser($user)
+    {
+       User::upsert($user);
     }
 
     /**
