@@ -89,18 +89,24 @@ class Connect
      */
     public function retriveProfile()
     {
+//         $response = $this->facebook->get("/me", $this->getAccessToken());
         $response = $this->facebook->get("/me?fields=id,name", $this->getAccessToken());
         $this->user = $response->getGraphUser();
-        $this->logger->debug('retriveProfile found id: ' . $this->user['id']);
         
+        // upsert user
         $this->upsertUser($this->user);
         
         return $this->user;
     }
 
+    /**
+     * Store or update the User
+     * 
+     * @param unknown $user            
+     */
     public function upsertUser($user)
     {
-       User::upsert($user);
+        User::upsert($user);
     }
 
     /**

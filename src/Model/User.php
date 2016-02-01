@@ -9,28 +9,35 @@ class User extends SimpleModel
 
     /**
      * Insert or update a facebook user.
-     * 
-     * @param unknown $user            
+     *
+     * @param array $payload            
      */
     public static function upsert($payload)
     {
-        R::freeze(false);
         
+        // R::freeze(false);
+        
+        // change the id into fbid.
         $payload['fbid'] = $payload['id'];
         unset($payload['id']);
         
+        // Find an existing user in db
         $user = R::findOne('user', 'fbid = :fbid ', array(
             ':fbid' => $payload['fbid']
         ));
         
+        // the date
+        $currentDate = new \DateTime();
+        
         if (! $user) {
-            
             $user = R::dispense('user');
             $user->import($payload);
+            $user->createdate = $currentDate->format('Y-m-d H:i:s');
         }
         
-        $dateFoo = new \DateTime();
-        $user->lastupdate = $dateFoo->format('Y-m-d H:i:s');
+        // update the lastupdated timestamp
+        
+        $user->lastupdate = $currentDate->format('Y-m-d H:i:s');
         
         R::store($user);
     }

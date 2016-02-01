@@ -16,6 +16,10 @@ use App\Facebook\Connect;
 final class AuthController
 {
 
+    /**
+     *
+     * @var Twig
+     */
     private $view;
 
     /**
@@ -60,12 +64,12 @@ final class AuthController
      *
      * @param Request $request            
      * @param Response $response            
-     * @param unknown $args            
+     * @param array $args            
      */
     public function callback(Request $request, Response $response, $args)
     {
+        // cleanup the session
         $this->session->clear();
-        
         
         if ($this->facebook->getAccessToken()) {
             return $response->withRedirect($this->router->pathFor('home'));
@@ -84,19 +88,16 @@ final class AuthController
      */
     public function login(Request $request, Response $response, $args)
     {
-//         $helper = $this->facebook->getRedirectLoginHelper();
+        // $helper = $this->facebook->getRedirectLoginHelper();
         
-//         $permissions = $this->settings['facebook-permissions'];
-//         $baseDomain = $this->settings['baseDomain'];
+        // $permissions = $this->settings['facebook-permissions'];
+        // $baseDomain = $this->settings['baseDomain'];
         
-//         $loginUrl = $helper->getLoginUrl($baseDomain . '/login-callback', $permissions);
+        // $loginUrl = $helper->getLoginUrl($baseDomain . '/login-callback', $permissions);
         
-//         $view['loginUrl'] = $loginUrl;
-
-        $this->session->clear();
-        
-        
-        $this->view->render($response, 'login.twig',  $this->viewData);
+        // $view['loginUrl'] = $loginUrl;
+        // $this->session->clear();
+        $this->view->render($response, 'login.twig', $this->viewData);
         return $response;
     }
 }

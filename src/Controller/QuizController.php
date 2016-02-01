@@ -92,6 +92,15 @@ final class QuizController
     }
 
     /**
+     */
+    private function handleLogin()
+    {
+        // if (! $this->facebook->hasAccessToken()) {
+        // return $response->withRedirect($this->router->pathFor('login'));
+        // }
+    }
+
+    /**
      *
      * @param Request $request            
      * @param Response $response            
@@ -99,9 +108,7 @@ final class QuizController
      */
     public function index(Request $request, Response $response, $args)
     {
-//         if (! $this->facebook->hasAccessToken()) {
-//             return $response->withRedirect($this->router->pathFor('login'));
-//         }
+        $this->handleLogin();
         
         if ($this->facebook->hasAccessToken()) {
             try {
@@ -111,6 +118,8 @@ final class QuizController
                 $profile = $this->facebook->retriveProfile();
                 
                 $friends = $this->facebook->retriveFriends();
+                
+                
             } catch (\Exception $ex) {
                 
                 $this->logger->error($ex->getMessage());
