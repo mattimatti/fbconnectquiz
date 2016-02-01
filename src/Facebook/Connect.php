@@ -6,6 +6,7 @@ use Facebook\Facebook;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Exceptions\FacebookResponseException;
 use Monolog\Logger;
+use Facebook\FacebookRequest;
 
 class Connect
 {
@@ -86,22 +87,22 @@ class Connect
      */
     public function retriveProfile()
     {
-        
-        // Returns a `Facebook\FacebookResponse` object
         $response = $this->facebook->get("/me?fields=id,name", $this->getAccessToken());
-        
-        $this->logger->debug(print_r($response, 1));
-//         print_r($response);
-//         exit();
-        
-        
         $this->user = $response->getGraphUser();
+        // $this->logger->debug($this->user['id']);
         
-        $this->logger->debug(print_r($this->user, 1));
-        
-//         print_r($this->user);
-//         exit();
         return $this->user;
+    }
+
+    /**
+     */
+    public function retriveFriends()
+    {
+        $this->logger->debug('retriveFriends');
+        $response = $this->facebook->get('/me/friends', $this->getAccessToken());
+        $graphObject = $response->getGraphEdge();
+        $this->logger->debug(print_r($graphObject, 1));
+        return $graphObject;
     }
 
     /**

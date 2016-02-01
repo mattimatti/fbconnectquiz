@@ -30,8 +30,10 @@ return [
         
         "facebook-permissions" => [
             'email',
+            'public_profile',
+            'user_about_me',
             'publish_actions',
-            'user_likes'
+            'user_friends'
         ],
         
         "db" => [

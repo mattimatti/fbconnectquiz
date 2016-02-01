@@ -1,11 +1,11 @@
-var App = function() {
+var App = function(scopes) {
+	this.scopes = scopes;
 };
 
 App.prototype.share = function(callback) {
 
-	callback(true);
-	return;
-	
+	console.debug('share')
+
 	FB.ui({
 		method : 'share',
 		href : 'http://www.mattimatti.com',
@@ -14,15 +14,21 @@ App.prototype.share = function(callback) {
 }
 
 
-App.prototype.login = function() {
+App.prototype.login = function(callback) {
+
+	if (!callback) {
+		callback = function() {
+			window.location.href = '/login-callback';
+		}
+	}
 
 	FB.login(function(response) {
 		if (response.authResponse) {
-			window.location.href = '/login-callback';
+			callback();
 		} else {
-			alert('User cancelled login or did not fully authorize.');
+			console.error('User cancelled login or did not fully authorize.');
 		}
-	});
+	},{scope: this.scopes});
 
 	return false;
 };
@@ -35,17 +41,24 @@ App.prototype.logout = function(callback) {
 
 App.prototype.onClick = function(callback) {
 
-	this.share(function(response) {
-		if (response && !response.error_message) {
-			console.debug('Posting completed.');
-			callback(true);
-		} else {
-			console.debug('Error while posting.');
-			callback(false);
-		}
+	var me = this;
+	this.login(function() {
+		console.debug('login callback')
+		me.share(function(response) {
+			console.debug('share callback', arguments);
+			if (response && !response.error_message) {
+				console.debug('Posting completed.');
+				callback(true);
+			} else {
+				console.error('Posting failed or cancelled');
+				callback(false);
+			}
 
-	});
-	return true;
+		});
+		return true;
+	})
+
+
 };
 
 //FB.getLoginStatus(function(response) {
@@ -85,16 +98,13 @@ $('.selection').on("click", function(e) {
 		if (success) {
 			$('#quizform').submit();
 		} else {
-			alert('too bad');
+			$('#selection').val('');
 		}
-
-
 	})
 
 });
 
 
-var fbapp = new App();
 
 
 (function(d, s, id) {

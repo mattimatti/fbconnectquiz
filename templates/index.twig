@@ -1,8 +1,8 @@
 {% extends "layout.twig" %} {% block content %}
 
-{# <div class="logout text-center">#}
-{# {% include "components/button-logout.twig" %}#}
-{# </div>#}
+<div class="logout text-center">
+{% include "components/button-logout.twig" %}
+</div>
 
 
 
@@ -17,6 +17,7 @@
 
 <hr />
 
+{% if selecteditem %}
 
 {% include "components/selected-item.twig" %}
 
@@ -25,7 +26,7 @@
 {% include "components/next-action.twig" %}
 
 
-{% if not selecteditem %}
+{% else %}
 
 <!-- Block Answers -->
 <hr />

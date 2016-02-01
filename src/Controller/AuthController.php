@@ -50,6 +50,9 @@ final class AuthController
         $this->facebook = $container->get('facebook');
         $this->settings = $container->get('settings');
         $this->session = $container->get('session');
+        
+        $this->viewData = array();
+        $this->viewData['permissions'] = json_encode($this->settings["facebook-permissions"]);
     }
 
     /**
@@ -60,8 +63,10 @@ final class AuthController
      */
     public function callback(Request $request, Response $response, $args)
     {
+        $this->session->clear();
         
-        if($this->facebook->getAccessToken()){
+        
+        if ($this->facebook->getAccessToken()) {
             return $response->withRedirect($this->router->pathFor('home'));
         }
         
@@ -86,8 +91,11 @@ final class AuthController
 //         $loginUrl = $helper->getLoginUrl($baseDomain . '/login-callback', $permissions);
         
 //         $view['loginUrl'] = $loginUrl;
+
+        $this->session->clear();
         
-        $this->view->render($response, 'login.twig');
+        
+        $this->view->render($response, 'login.twig',  $this->viewData);
         return $response;
     }
 }
