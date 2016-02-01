@@ -1,6 +1,38 @@
 var App = function(scopes) {
 	this.scopes = scopes;
+	this.init();
 };
+
+App.prototype.init = function(callback) {
+
+	console.debug('init');
+	var self = this;
+
+	FB.getLoginStatus(function(response) {
+		if (response.status === 'connected') {
+
+			console.debug('connected', response);
+
+
+			// the user is logged in and has authenticated your
+			// app, and response.authResponse supplies
+			// the user's ID, a valid access token, a signed
+			// request, and the time the access token 
+			// and signed request each expire
+			var uid = response.authResponse.userID;
+			var accessToken = response.authResponse.accessToken;
+		} else if (response.status === 'not_authorized') {
+
+			console.error('not_authorized', response);
+			// the user is logged in to Facebook, 
+			// but has not authenticated your app
+		} else {
+			console.error('no feedback', response);
+			// the user isn't logged in to Facebook.
+		}
+	});
+
+}
 
 App.prototype.share = function(callback) {
 
@@ -28,7 +60,9 @@ App.prototype.login = function(callback) {
 		} else {
 			console.error('User cancelled login or did not fully authorize.');
 		}
-	},{scope: this.scopes});
+	}, {
+		scope : this.scopes
+	});
 
 	return false;
 };
@@ -87,6 +121,7 @@ $('.login-btn').on("click", function(e) {
 $('.logout-btn').on("click", function(e) {
 	fbapp.logout(function(response) {
 		console.debug(response);
+		windo.wlocation.href = '/';
 	});
 });
 
@@ -95,6 +130,7 @@ $('.selection').on("click", function(e) {
 	var elm = $(e.currentTarget);
 	var selection = $('#selection').val(elm.data('val'));
 	fbapp.onClick(function(success) {
+		console.debug('on shared the url', success);
 		if (success) {
 			$('#quizform').submit();
 		} else {
@@ -103,8 +139,6 @@ $('.selection').on("click", function(e) {
 	})
 
 });
-
-
 
 
 (function(d, s, id) {
@@ -117,12 +151,3 @@ $('.selection').on("click", function(e) {
 	js.src = "//connect.facebook.net/en_US/sdk.js";
 	fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
-
-
-window.fbAsyncInit = function() {
-	FB.init({
-		appId : '634642500001239',
-		cookie : true,
-		version : 'v2.5'
-	});
-}

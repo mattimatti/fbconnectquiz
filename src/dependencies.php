@@ -55,25 +55,30 @@ $container['facebook'] = function ($c)
     return $connect;
 };
 
-$container['quiz'] = function ($c)
+$container['database'] = function ($c)
 {
-    return new QuizService();
-};
-
-$container['db'] = function ($c)
-{
+    $logger = $c->get('logger');
+    $settings = $c->get('settings')['database'];
     
-    $settings = $c->get('settings')['db'];
-    
-    OODB::autoClearHistoryAfterStore(TRUE);
     define('REDBEAN_MODEL_PREFIX', '\\App\\Model\\');
     
-    R::setup('mysql:host=' . $settings['host'] . ';dbname=' . $settings['dbname'], $settings['username'], $settings['password']);
+    $connectionString = 'mysql:host=' . $settings['host'] . ';dbname=' . $settings['dbname'];
     
-    // NEVER REMOVE THIS!
+    R::setup($connectionString, $settings['username'], $settings['password']);
+    
+    R::useWriterCache(true);
+    
+    // // NEVER REMOVE THIS!
     R::freeze(true);
+    
+    return R::getRedBean();
 };
 
+$container['quiz'] = function ($c)
+{
+    $database = $c->get('database');
+    return new QuizService();
+};
 
 
 

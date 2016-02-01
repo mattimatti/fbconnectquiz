@@ -62,10 +62,9 @@ final class QuizController
         $this->facebook = $container->get('facebook');
         $this->quiz = $container->get('quiz');
         
-        
-        
         $this->viewData = array();
         $this->viewData['permissions'] = json_encode($this->settings["facebook-permissions"]);
+        $this->viewData['theme'] = 'starwars';
     }
 
     /**
@@ -76,18 +75,15 @@ final class QuizController
      */
     public function submit(Request $request, Response $response, $args)
     {
-        // print_r($_POST);
-        // exit();
         $selected = $_POST['selection'];
         
         $this->viewData['quiz'] = $this->quiz->getOptions();
-        $this->viewData['theme'] = $args['name'];
         
         if (isset($_POST['selection'])) {
             $selectedAnswer = $this->quiz->getAnswer(1, $selected);
             if ($selectedAnswer) {
-                $data['answer'] = $selectedAnswer;
-                $data['selecteditem'] = true;
+                $this->viewData['answer'] = $selectedAnswer;
+                $this->viewData['selecteditem'] = true;
                 return $this->view->render($response, 'index.twig', $this->viewData);
             }
         }
@@ -103,21 +99,40 @@ final class QuizController
      */
     public function index(Request $request, Response $response, $args)
     {
-        if (! $this->facebook->hasAccessToken()) {
-            return $response->withRedirect($this->router->pathFor('login'));
-        }
+//         if (! $this->facebook->hasAccessToken()) {
+//             return $response->withRedirect($this->router->pathFor('login'));
+//         }
         
-        if($this->facebook->hasAccessToken()){
-            $profile = $this->facebook->retriveProfile();
-            $firends = $this->facebook->retriveFriends();
+        if ($this->facebook->hasAccessToken()) {
+            try {
+                
+                $this->logger->debug('facebook load data');
+                
+                $profile = $this->facebook->retriveProfile();
+                
+                $friends = $this->facebook->retriveFriends();
+            } catch (\Exception $ex) {
+                
+                $this->logger->error($ex->getMessage());
+                
+                return $response->withRedirect($this->router->pathFor('login'));
+            }
         }
-
-        
-       
         
         $this->viewData['quiz'] = $this->quiz->getOptions();
-        $this->viewData['theme'] = $args['name'];
         
         return $this->view->render($response, 'index.twig', $this->viewData);
+    }
+
+    /**
+     *
+     * @param Request $request            
+     * @param Response $response            
+     * @param unknown $args            
+     */
+    public function install(Request $request, Response $response, $args)
+    {
+        $data = $this->quiz->populate();
+        return $response->withRedirect($this->router->pathFor('login'));
     }
 }

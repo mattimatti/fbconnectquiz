@@ -13,31 +13,35 @@ class QuizService
      */
     function populate()
     {
-        // R::freeze(false);
         
-        // $quiz = R::dispense('quiz');
-        // $quiz->theme = 'starwars';
+        R::freeze(false);
+        R::nuke();
         
-        // R::store($quiz);
         
-        // $question = R::dispense('question');
-        // $question->title = 'hello';
-        // R::store($question);
+        $quiz = R::dispense('quiz');
+        $quiz->theme = 'starwars';
         
-        // $quiz->question = $question;
-        // R::store($quiz);
+        R::store($quiz);
         
-        // $answer = R::dispense('answer');
-        // $answer->text = 'Han Solo';
-        // $answer->extended = 'Han Solo is a crack';
-        // $answer->image = 'A.png';
-        // R::store($answer);
+        $question = R::dispense('question');
+        $question->title = 'hello';
+        R::store($question);
         
-        // $quiz->ownAnswerList[] = $answer;
+        $question->quiz = $quiz;
+        R::store($question);
         
-        // R::store($quiz);
+        $answer = R::dispense('answer');
+        $answer->text = 'Han Solo';
+        $answer->extended = 'Han Solo is a crack';
+        $answer->image = 'A.png';        
+        $answer->quiz = $quiz;
+        R::store($answer);
         
-        // R::freeze(true);
+        
+        R::freeze(true);
+        
+        
+        return $quiz;
     }
 
     /**
@@ -47,6 +51,8 @@ class QuizService
     public function getOptions()
     {
         $quiz = array();
+        
+        $quiz['nextaction'] = '/';
         
         $question = array();
         $question['title'] = 'Which Star Wars Character Are You?!';

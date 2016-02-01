@@ -1,12 +1,6 @@
 {% extends "layout.twig" %} {% block content %}
 
-<div class="logout text-center">
-{% include "components/button-logout.twig" %}
-</div>
-
-
-
-
+{# <div class="logout text-center">{% include "components/button-logout.twig" %}</div>#}
 
 
 <!-- Block Question  -->
@@ -15,33 +9,28 @@
 	<h1>{{ quiz.question.title }}</h1>
 </div>
 
-<hr />
 
-{% if selecteditem %}
 
-{% include "components/selected-item.twig" %}
+{% if selecteditem %} 
 
-<hr />
+ <a href="{{ quiz.nextaction }}" >
+	{% include "components/selected-item.twig" %}
+ </a>
 
-{% include "components/next-action.twig" %}
 
+
+{# {% include "components/next-action.twig" %} #}
 
 {% else %}
 
 <!-- Block Answers -->
-<hr />
+
 
 <form id="quizform" method="post">
-    <input type="hidden" name="selection" id="selection" value="" />
-	<div class="row">
-		{% for answer in quiz.answers %}
-			{% include "components/item.twig" %}
-		{% endfor %}
-	</div>
+	<input type="hidden" name="selection" id="selection" value="" />
+	<div class="row">{% for answer in quiz.answers %} {% include "components/item.twig" %} {% endfor %}</div>
 </form>
 
-<hr />
 
-{% endif %}
 
-{% endblock %}
+{% endif %} {% endblock %}

@@ -89,7 +89,7 @@ class Connect
     {
         $response = $this->facebook->get("/me?fields=id,name", $this->getAccessToken());
         $this->user = $response->getGraphUser();
-        // $this->logger->debug($this->user['id']);
+        $this->logger->debug('retriveProfile found id: ' . $this->user['id']);
         
         return $this->user;
     }
@@ -98,10 +98,10 @@ class Connect
      */
     public function retriveFriends()
     {
-        $this->logger->debug('retriveFriends');
         $response = $this->facebook->get('/me/friends', $this->getAccessToken());
         $graphObject = $response->getGraphEdge();
-        $this->logger->debug(print_r($graphObject, 1));
+        $this->logger->debug('retriveFriends');
+        $this->logger->debug($graphObject->asJson());
         return $graphObject;
     }
 

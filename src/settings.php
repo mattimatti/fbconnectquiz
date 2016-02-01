@@ -36,11 +36,11 @@ return [
             'user_friends'
         ],
         
-        "db" => [
+        "database" => [
             'host' => 'localhost',
             'dbname' => 'quiz',
             'username' => 'root',
-            'password' => ''
+            'password' => '1234'
         ]
     ]
 ];
