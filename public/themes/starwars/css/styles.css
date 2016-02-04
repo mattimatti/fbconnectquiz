@@ -6,13 +6,14 @@
 
 @import url("typography.css");
 
-
 body {
-	background-image: url('/themes/starwars/images/share.png');
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
+	background-color: #000;
+	background-image: url('/themes/starwars/images/share.png') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
-
 
 #question {
 	margin-top: 50px;
@@ -44,7 +45,7 @@ h1 {
 .box a {
 	text-decoration: none;
 	/*background-color: gray;*/
-	background-color:rgba(255, 255, 255, 0.5);
+	background-color: rgba(255, 255, 255, 0.5);
 	color: white;
 	padding-top: 30px;
 }
@@ -86,6 +87,59 @@ h1 {
 
 @media ( min-width :992px) {
 	.box a {
+		height: 350px;
+		min-height: 350px;
+	}
+	.login {
+		margin-top: 40%;
+	}
+}
+
+@media ( min-width :1200px) {
+	.login {
+		margin-top: 40%;
+	}
+}
+
+.login {
+	margin-top: 60%;
+}
+
+.logout {
+	margin-top: 5%;
+}
+
+@media ( max-width :400px) {
+	.box
+ 
+a {
+		height: 350px;
+		min-height: 350px;
+	}
+}
+
+@media ( max-width :767px) {
+	.box
+ 
+a {
+		height: 400px;
+		min-height: 400px;
+	}
+}
+
+@media ( min-width :768px) {
+	.box
+ 
+a {
+		height: 450px;
+		min-height: 450px;
+	}
+}
+
+@media ( min-width :992px) {
+	.box
+ 
+a {
 		height: 350px;
 		min-height: 350px;
 	}
