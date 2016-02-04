@@ -8,8 +8,14 @@
 
 
 body {
-	background-image: url('/themes/starwars/images/share.png') no-repeat;
+	background-image: url('/themes/starwars/images/share.png');
 	background-size: 100% auto;
+	background-repeat: no-repeat;
+}
+
+
+h1 {
+	color: white;
 }
 
 .mt30 {
