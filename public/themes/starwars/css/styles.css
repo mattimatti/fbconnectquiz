@@ -6,6 +6,12 @@
 
 @import url("typography.css");
 
+
+body {
+	background-image: '/themes/starwars/images/share.png';
+	background-size: 100% auto;
+}
+
 .mt30 {
 	margin-top: 30px;
 	display: block;
