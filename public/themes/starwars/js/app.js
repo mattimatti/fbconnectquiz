@@ -1,9 +1,9 @@
-var App = function(scopes) {
+var FacebookApp = function(scopes) {
 	this.scopes = scopes;
 	this.init();
 };
 
-App.prototype.init = function(callback) {
+FacebookApp.prototype.init = function(callback) {
 
 	console.debug('init');
 	var self = this;
@@ -34,7 +34,7 @@ App.prototype.init = function(callback) {
 
 }
 
-App.prototype.share = function(callback) {
+FacebookApp.prototype.share = function(callback) {
 
 	console.debug('share')
 
@@ -46,7 +46,7 @@ App.prototype.share = function(callback) {
 }
 
 
-App.prototype.login = function(callback) {
+FacebookApp.prototype.login = function(callback) {
 
 	if (!callback) {
 		callback = function() {
@@ -68,12 +68,12 @@ App.prototype.login = function(callback) {
 };
 
 
-App.prototype.logout = function(callback) {
+FacebookApp.prototype.logout = function(callback) {
 	FB.logout(callback);
 };
 
 
-App.prototype.onClick = function(callback) {
+FacebookApp.prototype.onClick = function(callback) {
 
 	var me = this;
 	this.login(function() {
