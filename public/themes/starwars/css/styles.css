@@ -8,7 +8,7 @@
 
 
 body {
-	background-image: url('/themes/starwars/images/share.png');
+	background-image: url('/themes/starwars/images/share.png') no-repeat;
 	background-size: 100% auto;
 }
 
