@@ -52,6 +52,10 @@ h1 {
 	border : none;
 }
 
+.thumbnail>img {
+	max-width: none;
+}
+
 .box a {
 	text-decoration: none;
 	/*background-color: gray;*/
