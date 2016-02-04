@@ -5,8 +5,8 @@
 <head>
 <meta charset="utf-8" />
 <title>{{ theme }}</title>
-<meta property="og:image" content="http://{{ domain }}/themes/{{ theme }}/images/share.png"/>
-<meta property="og:image:secure_url" content="https://{{ domain }}/themes/{{ theme }}/images/share.png" />
+<meta property="og:image" content="http://{{ settings.baseDomain }}/themes/{{ theme }}/images/share.png"/>
+<meta property="og:image:secure_url" content="https://{{ settings.baseDomain }}/themes/{{ theme }}/images/share.png" />
 <link href='/themes/{{ theme }}/css/styles.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -22,7 +22,7 @@
 	
 	window.fbAsyncInit = function() {
 		FB.init({
-			appId : '634642500001239',
+			appId : '{{ settings.facebook.app_id }}',
 			cookie : true,
 			version : 'v2.5'
 		});
@@ -30,7 +30,7 @@
 		fbapp = new App({{ permissions|raw }});
 		
 	}
-
+	
 	
 	</script>
 
