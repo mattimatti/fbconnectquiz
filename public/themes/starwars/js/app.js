@@ -114,12 +114,12 @@ FacebookApp.prototype.onClick = function(callback) {
 
 
 $('.login-btn').on("click", function(e) {
-	fbapp.login();
+	App.fb.login();
 });
 
 
 $('.logout-btn').on("click", function(e) {
-	fbapp.logout(function(response) {
+	App.fb.logout(function(response) {
 		console.debug(response);
 		windo.wlocation.href = '/';
 	});
@@ -129,7 +129,7 @@ $('.logout-btn').on("click", function(e) {
 $('.selection').on("click", function(e) {
 	var elm = $(e.currentTarget);
 	var selection = $('#selection').val(elm.data('val'));
-	fbapp.onClick(function(success) {
+	App.fb.onClick(function(success) {
 		console.debug('on shared the url', success);
 		if (success) {
 			$('#quizform').submit();
