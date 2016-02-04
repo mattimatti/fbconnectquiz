@@ -40,7 +40,7 @@ App.prototype.share = function(callback) {
 
 	FB.ui({
 		method : 'share',
-		href : 'http://www.mattimatti.com',
+		href : 'http://playground.mattimatti.com',
 	}, callback);
 
 }

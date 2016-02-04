@@ -17,9 +17,8 @@ date_default_timezone_set("Europe/London");
 
 session_start();
 
-
 // Instantiate the app
-$settings = require __DIR__ . '/../src/production.php';
+$settings = require __DIR__ . '/../src/settings.php';
 
 
 

@@ -23,8 +23,8 @@ return [
         
         // Facebook Api settings
         'facebook' => [
-            "app_id" => "634642500001239",
-            "app_secret" => "bb932950d2bf8ad84de3b115161fb138",
+            "app_id" => "636075736524582",
+            "app_secret" => "a07f5d230dfb0b0f3b2198262e8b94c6",
             "default_graph_version" => "v2.5"
         ],
         
