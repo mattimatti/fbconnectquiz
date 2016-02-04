@@ -17,6 +17,11 @@ body {
 	background-size: cover;
 }
 
+
+a {
+	color: white;
+}
+
 #question {
 	margin-top: 50px;
 }
