@@ -1,12 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
 <meta charset="utf-8" />
 <title>{{ theme }}</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<meta property="og:title" content="Starwars" />
+<meta property="og:description" content="Starwars" />
+<meta property="og:image" content="thumbnail_image" />
+
+
 <meta property="og:image" content="{{ settings.baseDomain }}/themes/{{ theme }}/images/share.png"/>
+
 <link href='/themes/{{ theme }}/css/styles.css' rel='stylesheet' type='text/css'>
+
 </head>
 <body>
 	<div class="container">{% block content %} {% endblock %}</div>
