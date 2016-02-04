@@ -14,6 +14,14 @@ body {
 }
 
 
+#question {
+	margin-top: 50px;
+}
+
+#quizform {
+	margin-top: 50px;
+}
+
 h1 {
 	color: white;
 }
