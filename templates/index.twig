@@ -6,10 +6,10 @@
 	<meta property="og:description" content="" />
 
 	{% if selecteditem %} 
-	   <meta property="og:image" content="/themes/{{ theme }}/dist/images/{{ answer.image }}"/>
+	   <meta property="og:image" content="{{ settings.baseDomain }}/themes/{{ theme }}/dist/images/{{ answer.image }}"/>
 	   <meta property="og:url" content="{{ shareurl }}"/>
 	{% else %}
-	   <meta property="og:image" content="{{ settings.baseDomain }}/themes/{{ theme }}/images/share.png"/>
+	   <meta property="og:image" content="{{ settings.baseDomain }}/themes/{{ theme }}/dist/images/share.png"/>
 	   <meta property="og:url" content="{{ settings.baseDomain }}"/>
 	{% endif %}
 	
