@@ -158,9 +158,17 @@ final class QuizController
      */
     public function share(Request $request, Response $response, $args)
     {
-       
+        
+        
+        $pos = strrpos($_SERVER['HTTP_USER_AGENT'], "facebook");
+        if ($pos === false) { // note: three equal signs
+            $this->handleRedirect();
+        }else{
+            
+        }
+        
         $this->logger->debug(print_r($_SERVER, true));
-        //$this->handleRedirect();
+        //
         
         $selectedAnswer = $this->quiz->getAnswer(1, $args['id']);
         $this->viewData['quiz'] = $this->quiz->getOptions(1);
