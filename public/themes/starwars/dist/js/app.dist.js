@@ -11401,6 +11401,7 @@ return jQuery;
 	this.baseUrl = baseUrl;
 	this.scopes = scopes;
 	this.init();
+	console.debug(this);
 };
 
 FacebookApp.prototype.init = function(callback) {
@@ -11409,7 +11410,7 @@ FacebookApp.prototype.init = function(callback) {
 
 	FB.getLoginStatus(function(response) {
 		if (response.status === 'connected') {
-			
+
 			console.debug('connected', response);
 
 			// the user is logged in and has authenticated your
@@ -11433,12 +11434,19 @@ FacebookApp.prototype.init = function(callback) {
 };
 
 FacebookApp.prototype.share = function(callback) {
-
-	FB.ui({
-		method : 'share',
-		href : this.baseUrl,
-	}, callback);
-
+	console.debug('share', this.baseUrl);
+	
+	var self = this;
+	
+	FB.getLoginStatus(function(response) {
+		console.debug('ready to share');
+		if (response.status === 'connected') {
+			FB.ui({
+				method : 'share',
+				href : self.baseUrl,
+			}, callback);
+		}
+	});
 };
 
 
@@ -11490,7 +11498,7 @@ FacebookApp.prototype.voteBlocking = function(callback) {
 };
 
 FacebookApp.prototype.vote = function(callback) {
-	
+
 	var me = this;
 	this.login(function() {
 		console.debug('login callback');
