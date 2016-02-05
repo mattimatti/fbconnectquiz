@@ -65,7 +65,7 @@ module.exports = function(grunt) {
 			},
 			main : {
 				files : {
-					'dist/css/styles.min.css' : [ '../../bower_components/bootstrap/dist/css/bootstrap.css', 'css/styles.css', 'css/typography.css' ]
+					'dist/css/styles.min.css' : [ '../../bower_components/hover/css/hover.css','../../bower_components/bootstrap/dist/css/bootstrap.css', 'css/styles.css', 'css/typography.css' ]
 				}
 			}
 		},
