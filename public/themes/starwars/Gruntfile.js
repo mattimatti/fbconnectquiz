@@ -50,18 +50,20 @@ module.exports = function(grunt) {
 		responsive_images : {
 			dev : {
 				options : {
-					engine : 'im'
+					engine : 'im',
+					newFilesOnly : false,
+					sizes : [ {
+						name : "small",
+						width : 120,
+					}, {
+						name : "medium",
+						width : 240,
+					}, {
+						name : "large",
+						width : 480,
+					} ]
 				},
-				sizes : [ {
-					name : "small",
-					width : 200,
-				}, {
-					name : "medium",
-					width : 400,
-				}, {
-					name : "large",
-					width : 500,
-				} ],
+				
 				files : [ {
 					expand : true,
 					src : [ 'images/**/*.{jpg,gif,png}' ],
