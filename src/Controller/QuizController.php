@@ -158,8 +158,9 @@ final class QuizController
      */
     public function share(Request $request, Response $response, $args)
     {
-        $this->handleRedirect();
-        
+       
+        $this->logger->debug(print_r($_SERVER, true));
+        //$this->handleRedirect();
         
         $selectedAnswer = $this->quiz->getAnswer(1, $args['id']);
         $this->viewData['quiz'] = $this->quiz->getOptions(1);
