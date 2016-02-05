@@ -53,15 +53,14 @@ module.exports = function(grunt) {
 					engine : 'im'
 				},
 				sizes : [ {
-					width : 300
+					name : "small",
+					width : 200,
 				}, {
-					name : 'large',
-					width : 400
+					name : "medium",
+					width : 400,
 				}, {
 					name : "large",
 					width : 500,
-					suffix : "_x2",
-					quality : 0.6
 				} ],
 				files : [ {
 					expand : true,
