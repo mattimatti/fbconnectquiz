@@ -62,7 +62,9 @@ final class AuthController
         
         $this->viewData = array();
         $this->viewData['permissions'] = json_encode($this->settings["facebook-permissions"]);
+        $this->viewData['settings'] = $this->settings;
         $this->viewData['theme'] = 'starwars';
+        $this->viewData['version'] = 1;
     }
 
     /**
