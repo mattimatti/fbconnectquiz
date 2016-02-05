@@ -1,6 +1,21 @@
 {% extends "layout.twig" %} 
 
 
+{% block facebook %} 
+	<meta property="og:title" content="Which Star Wars Character Are You?!" />
+	<meta property="og:description" content="" />
+
+	{% if selecteditem %} 
+	   <meta property="og:url" content="{{ shareurl }}"/>
+	{% else %}
+	   <meta property="og:image" content="{{ settings.baseDomain }}/themes/{{ theme }}/images/share.png"/>
+	   <meta property="og:url" content="{{ settings.baseDomain }}"/>
+	{% endif %}
+	
+{% endblock %}
+
+
+
 {% block content %}
 
 {# <div class="logout text-center">{% include "components/button-logout.twig" %}</div>#}

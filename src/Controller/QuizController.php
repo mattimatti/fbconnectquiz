@@ -91,6 +91,7 @@ final class QuizController
             if ($selectedAnswer) {
                 $this->viewData['answer'] = $selectedAnswer;
                 $this->viewData['selecteditem'] = true;
+                $this->viewData['shareurl'] = $this->settings['baseDomain'] .'/share/'.$selectedAnswer->getId();
                 return $this->view->render($response, 'index.twig', $this->viewData);
             }
         }
@@ -135,6 +136,24 @@ final class QuizController
         }
         
         $this->viewData['quiz'] = $this->quiz->getOptions(1);
+        
+        return $this->view->render($response, 'index.twig', $this->viewData);
+    }
+
+    
+    /**
+     *
+     * @param Request $request            
+     * @param Response $response            
+     * @param unknown $args            
+     */
+    public function share(Request $request, Response $response, $args)
+    {
+        $selectedAnswer = $this->quiz->getAnswer(1, $args['id']);
+        $this->viewData['quiz'] = $this->quiz->getOptions(1);
+        $this->viewData['answer'] = $selectedAnswer;
+        $this->viewData['selecteditem'] = true;
+        $this->viewData['shareurl'] = $this->settings['baseDomain'] .'/share/'.$selectedAnswer->getId();
         
         return $this->view->render($response, 'index.twig', $this->viewData);
     }

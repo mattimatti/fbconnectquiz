@@ -11433,17 +11433,21 @@ FacebookApp.prototype.init = function(callback) {
 
 };
 
-FacebookApp.prototype.share = function(callback) {
-	console.debug('share', this.baseUrl);
-	
+FacebookApp.prototype.share = function(url, callback) {
+
+	if (!url) {
+		url = self.baseUrl;
+	}
+	console.debug('share', url);
+
 	var self = this;
-	
+
 	FB.getLoginStatus(function(response) {
 		console.debug('ready to share');
 		if (response.status === 'connected') {
 			FB.ui({
 				method : 'share',
-				href : self.baseUrl,
+				href : url
 			}, callback);
 		}
 	});
@@ -11520,15 +11524,20 @@ $('.logout-btn').on("click", function(e) {
 });
 
 $('.share-btn').on("click", function(e) {
-	App.fb.share(function(response) {
-		console.debug('share callback', arguments);
-		if (response && !response.error_message) {
-			console.debug('Posting completed.');
-		} else {
-			console.error('Posting failed or cancelled');
-		}
-		return true;
+
+	var url = $(this).data('shareurl');
+	App.fb.login(function() {
+		App.fb.share(url, function(response) {
+			console.debug('share callback', arguments);
+			if (response && !response.error_message) {
+				console.debug('Posting completed.');
+			} else {
+				console.error('Posting failed or cancelled');
+			}
+			return true;
+		});
 	});
+
 });
 
 
