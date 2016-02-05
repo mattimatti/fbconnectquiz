@@ -9,6 +9,6 @@ $app->get('/login', 'App\Controller\AuthController:login')->setName('login');
 
 $app->get('/install', 'App\Controller\QuizController:install')->setName('install');
 
-$app->get('/share/{id}', 'App\Controller\QuizController:share')->setName('share');
+$app->get('/shared/{id}', 'App\Controller\QuizController:share')->setName('share');
 $app->get('/', 'App\Controller\QuizController:index')->setName('home');
 $app->post('/', 'App\Controller\QuizController:submit');
