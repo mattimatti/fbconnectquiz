@@ -149,6 +149,9 @@ final class QuizController
      */
     public function share(Request $request, Response $response, $args)
     {
+        $this->handleLogin();
+        
+        
         $selectedAnswer = $this->quiz->getAnswer(1, $args['id']);
         $this->viewData['quiz'] = $this->quiz->getOptions(1);
         $this->viewData['answer'] = $selectedAnswer;
