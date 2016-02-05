@@ -1,48 +1,14 @@
-/*body {
-	background-color: #000;
-	background-image: url('../images/share.png');
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	background-attachment: fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-}*/
 body {
 	background-color: #000;
 	background-image: url('../images/share.png');
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center;
+	color: white !important;
 }
 
 a,a:hover,a:visited {
 	color: white;
-}
-
-#question {
-	margin-top: 50px;
-}
-
-#question h1 {
-	color: white;
-}
-
-.alpha50 {
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-	filter: alpha(opacity =           50);
-	-moz-opacity: 0.5;
-	-khtml-opacity: 0.5;
-	opacity: 0.5;
-}
-
-.alpha100 {
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-	filter: alpha(opacity =           100);
-	-moz-opacity: 1;
-	-khtml-opacity: 1;
-	opacity: 1;
 }
 
 .selecteditemcontainer {
@@ -51,23 +17,16 @@ a,a:hover,a:visited {
 }
 
 .selecteditem {
-	padding: 20px;
 	background-color: rgba(255, 255, 0, 0.1);
-	color: white;
-}
-
-#quizform {
-	margin-top: 50px;
+	padding: 30px;
 }
 
 .mt30 {
 	margin-top: 30px;
-	display: block;
 }
 
 .mt50 {
 	margin-top: 50px;
-	display: block;
 }
 
 .box {
@@ -75,21 +34,18 @@ a,a:hover,a:visited {
 	text-decoration: none;
 }
 
-.thumbnail, .thumbnail>img {
-	border: 0 !important;
-}
-
-img.thumbnail {
+img.thumbnail,.thumbnail,.thumbnail>img {
 	border: 0 !important;
 	background-color: none;
 }
 
-
 .item.box a {
 	text-decoration: none;
 	background-color: rgba(0, 0, 0, 0.9);
-	color: white;
-	padding-top: 30px;
+}
+
+h5 {
+	font-size: 1.2em;
 }
 
 /* ********  LOGIN ***************/
@@ -101,13 +57,26 @@ img.thumbnail {
 	margin-top: 5%;
 }
 
+/* ********  MEDIA QUERIES ***************/
 @media ( max-width :400px) {
-}
-
-@media ( max-width :767px) {
+	h1 {
+		font-size: 1.1em;
+	}
+	.mt50 {
+		margin-top: 5px;
+	}
+	.mt30 {
+		margin-top: 2px;
+	}
+	h4 {
+		font-size: 1em;
+	}
 }
 
 @media ( min-width :768px) {
+	h4 {
+		font-size: 1.2em;
+	}
 }
 
 @media ( min-width :992px) {

@@ -1,26 +1,19 @@
 <div class="selecteditemcontainer">
-	<div class="col-xs-12">
-		<div class="selecteditem text-center mt30 thumbnail">
-			<h1>{# 				<small>Your Answer:</small> #}
-				{{ answer.title }}
-{# 				!!!!#}</h1>
-		
-			<div class=" mt30">
-			  <img class="" src="/themes/{{ theme }}/dist/images/{{ answer.image }}" alt="{{ answer.title }}">
+		<div class="selecteditem thumbnail">
+			<div class="text-center mt30">
+				<h1>{{ answer.title }}</h1>
+			</div>
+
+			<div class="text-center mt30 thumbnail">
+				<img class="" src="/themes/{{ theme }}/dist/images/{{ answer.image }}" alt="{{ answer.title }}">
 			</div>
 
 			<div class="text-center mt30">
-				<h4>{{ answer.message }}</h4>
+				<h5>{{ answer.message }}</h5>
 			</div>
-		
+
 			<div class="text-center mt30">
-				  <a class="btn btn-info btn-lg share-btn" data-shareurl="{{ shareurl }}" href="javascript:;" >Share with your friends</a>
+				<a class="btn btn-info btn-lg share-btn" data-shareurl="{{ shareurl }}" href="javascript:;">Share with your friends</a>
 			</div>
-		
 		</div>
-		
-
-		
-
-	</div>
 </div>
