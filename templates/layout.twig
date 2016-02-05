@@ -27,6 +27,7 @@
 	<div class="container">{% block content %} {% endblock %}</div>
 
 	<script type="text/javascript" src="/themes/{{ theme }}/dist/js/app.dist.min.js"></script>
+	<script type="text/javascript" src="/bower_components/hisrc/hisrc.js"></script>
 
 	<script type="text/javascript">
 
@@ -43,6 +44,11 @@
 		App.fb = new FacebookApp({{ permissions|raw }}, '{{ settings.baseDomain }}' );
 		
 	}
+
+	$(document).ready(function(){
+		$(".hisrc img").hisrc();
+	    $('#quizform').show();
+	});
 	
 	
 	</script>

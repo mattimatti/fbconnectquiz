@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 				separator : ';'
 			},
 			dist : {
-				src : [ '../../bower_components/console-polyfill/index.js', '../../bower_components/jquery/dist/jquery.js', '../../bower_components/underscore/underscore.js', 'js/app.js' ],
+				src : [ '../../bower_components/console-polyfill/index.js', '../../bower_components/jquery/dist/jquery.js', 'js/app.js' ],
 				dest : 'dist/js/app.dist.js'
 			}
 		},
@@ -47,7 +47,30 @@ module.exports = function(grunt) {
 				} ]
 			}
 		},
-
+		responsive_images : {
+			dev : {
+				options : {
+					engine : 'im'
+				},
+				sizes : [ {
+					width : 300
+				}, {
+					name : 'large',
+					width : 400
+				}, {
+					name : "large",
+					width : 500,
+					suffix : "_x2",
+					quality : 0.6
+				} ],
+				files : [ {
+					expand : true,
+					src : [ 'images/**/*.{jpg,gif,png}' ],
+					cwd : './',
+					dest : 'dist/'
+				} ]
+			}
+		},
 		copy : {
 			main : {
 				files : [ {
@@ -65,7 +88,7 @@ module.exports = function(grunt) {
 			},
 			main : {
 				files : {
-					'dist/css/styles.min.css' : [ '../../bower_components/hover/css/hover.css','../../bower_components/bootstrap/dist/css/bootstrap.css', 'css/styles.css', 'css/typography.css' ]
+					'dist/css/styles.min.css' : [ '../../bower_components/hover/css/hover.css', '../../bower_components/bootstrap/dist/css/bootstrap.css', 'css/styles.css', 'css/typography.css' ]
 				}
 			}
 		},
@@ -73,19 +96,6 @@ module.exports = function(grunt) {
 		watch : {
 			files : [ '<%= jshint.files %>', 'css/*.css' ],
 			tasks : [ 'compile' ]
-		},
-		resize_crop : {
-			image_group : {
-				options : {
-					format : "png",
-					gravity : "center",
-					height : 600,
-					width : 500
-				},
-				files : {
-					'your/destination/directory' : [ 'your/source/images/kittens.png', 'your/source/images/puppies.jpg' ],
-				},
-			},
 		}
 
 	});
@@ -100,11 +110,12 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-resize-crop');
+	grunt.loadNpmTasks('grunt-responsive-images');
 
 	grunt.registerTask('test', [ 'jshint' ]);
 
 	grunt.registerTask('compile', [ 'jshint', 'copy', 'concat', 'uglify', 'cssmin' ]);
 
-	grunt.registerTask('default', [ 'clean', 'compile', 'imagemin' ]);
+	grunt.registerTask('default', [ 'clean', 'compile', 'responsive_images', 'imagemin' ]);
 
 };
