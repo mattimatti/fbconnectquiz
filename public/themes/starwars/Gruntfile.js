@@ -74,7 +74,7 @@ grunt.initConfig({
     clean: ["dist"],
     watch: {
         files: ['<%= jshint.files %>', 'css/*.css'],
-        tasks: ['default']
+        tasks: ['compile']
     }
 
 });
@@ -91,6 +91,8 @@ grunt.loadNpmTasks('grunt-contrib-clean');
 
 grunt.registerTask('test', ['jshint']);
 
-grunt.registerTask('default', ['jshint', 'clean', 'copy', 'concat', 'uglify', 'imagemin', 'cssmin']);
+grunt.registerTask('compile', ['jshint',  'copy', 'concat', 'uglify', 'cssmin']);
+
+grunt.registerTask('default', ['clean','compile', 'imagemin']);
 
 };

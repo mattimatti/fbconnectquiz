@@ -3,7 +3,7 @@ return [
     'settings' => [
         'displayErrorDetails' => true,
         
-        'baseDomain' => 'http://localhost:9091',
+        'baseDomain' => 'http://localhost:8081',
         
         // Renderer settings
         'view' => [

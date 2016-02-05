@@ -1,17 +1,17 @@
 <div class="selecteditemcontainer">
 	<div class="col-xs-12 selecteditem text-center">
 		<h1>
-			<small>Your Answer:</small> {{ answer.title }}!!!!
+{# 			<small>Your Answer:</small> #}
+			{{ answer.title }}!!!!
 		</h1>
-		
-		<div class="text-center">
-			<h4 class="mt30">{{ answer.message }}</h4>
-		</div>
-		
-		<div class="text-center mt30">
+
+		<div class="text-center mt30 thumbnail">
 			  <img  src="/themes/starwars/dist/images/{{ answer.image }}" alt="{{ answer.title }}">
 		</div>
 		
+		<div class="text-center mt30">
+			<h4>{{ answer.message }}</h4>
+		</div>
 
 		
 		<div class="text-center mt30">

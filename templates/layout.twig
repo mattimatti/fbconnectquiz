@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:og="http://ogp.me/ns#"
-      xmlns:fb="https://www.facebook.com/2008/fbml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
 <meta charset="utf-8" />
 <title>{{ theme }}</title>
@@ -9,27 +7,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <meta property="og:title" content="Which Star Wars Character Are You?!" />
+
+
+{% if selecteditem %}
+<meta property="og:description" content="{{ answer.message }}" />
+{% else %}
 <meta property="og:description" content="" />
-<meta property="og:image" content="{{ settings.baseDomain }}/themes/{{ theme }}/images/share.png"/>
-<meta property="og:url" content="{{ settings.baseDomain }}"/>
+{% endif %}
+
+
+
+
+<meta property="og:image" content="{{ settings.baseDomain }}/themes/{{ theme }}/dist/images/share.png" />
+<meta property="og:url" content="{{ settings.baseDomain }}" />
 
 
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
 
-<link href='/themes/{{ theme }}/dist/css/styles.min.css' rel='stylesheet' type='text/css'>
-{#<link href='/themes/{{ theme }}/css/styles.css' rel='stylesheet' type='text/css'>#}
+<link href='/themes/{{ theme }}/dist/css/styles.min.css?{{ version }}' rel='stylesheet' type='text/css'>
 
 </head>
 <body>
 	<div class="container">{% block content %} {% endblock %}</div>
 
-	<script type="text/javascript" src="/themes/{{ theme }}/dist/js/app.dist.min.js"></script>
-
+	<script type="text/javascript" src="/themes/{{ theme }}/dist/js/app.dist.min.js?{{ version }}"></script>
 	<script type="text/javascript">
 
 	var App = App || {};
-	
 	
 	window.fbAsyncInit = function() {
 		FB.init({
@@ -39,17 +44,8 @@
 		});
 
 		App.fb = new FacebookApp({{ permissions|raw }}, '{{ settings.baseDomain }}' );
-		
 	}
 	
-	
 	</script>
-
-{# 	<!-- #}
-	
-{# 	{{ dump(settings) }}#}
-	
-{# 	 -->#}
-
 </body>
 </html>
