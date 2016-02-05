@@ -162,8 +162,9 @@ final class QuizController
         
         $pos = strrpos($_SERVER['HTTP_USER_AGENT'], "facebook");
         if ($pos === false) { // note: three equal signs
-            return $response->withRedirect($this->router->pathFor('home'));            
+            exit();
         }
+            return $response->withRedirect($this->router->pathFor('home'));            
         
         $this->logger->debug(print_r($_SERVER, true));
         //
