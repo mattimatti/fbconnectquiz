@@ -109,6 +109,14 @@ final class QuizController
         // }
     }
 
+    
+    private function handleRedirect()
+    {
+        if (! $this->facebook->hasAccessToken()) {
+            return $response->withRedirect($this->router->pathFor('home'));
+        }
+    }
+
     /**
      *
      * @param Request $request            
@@ -150,7 +158,7 @@ final class QuizController
      */
     public function share(Request $request, Response $response, $args)
     {
-        $this->handleLogin();
+        $this->handleRedirect();
         
         
         $selectedAnswer = $this->quiz->getAnswer(1, $args['id']);
