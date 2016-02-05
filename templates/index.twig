@@ -7,7 +7,8 @@
 
 	{% if selecteditem %} 
 	   <meta property="og:image" content="{{ settings.baseDomain }}/themes/{{ theme }}/dist/images/{{ answer.image }}"/>
-	   <meta property="og:url" content="{{ shareurl }}"/>
+{# 	   <meta property="og:url" content="{{ shareurl }}"/>#}
+	   <meta property="og:url" content="{{ settings.baseDomain }}"/>
 	{% else %}
 	   <meta property="og:image" content="{{ settings.baseDomain }}/themes/{{ theme }}/dist/images/share.png"/>
 	   <meta property="og:url" content="{{ settings.baseDomain }}"/>
