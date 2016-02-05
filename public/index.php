@@ -21,7 +21,8 @@ session_start();
 // Instantiate the app
 $settings = require __DIR__ . '/../src/production.php';
 
-
+print_r($settings['view']);
+exit();
 
 $app = new \Slim\App($settings);
 
