@@ -164,7 +164,7 @@ final class QuizController
         if ($pos === false) { // note: three equal signs
             
         }else{
-            $this->handleRedirect();
+            return $response->withRedirect($this->router->pathFor('home'));
         }
         
         $this->logger->debug(print_r($_SERVER, true));
