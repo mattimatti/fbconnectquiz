@@ -9885,6 +9885,7 @@ FacebookApp.prototype.init = function(callback) {
 
 };
 
+
 FacebookApp.prototype.share = function(url, callback) {
 
 	if (!url) {
@@ -9994,6 +9995,7 @@ $('.share-btn').on("click", function(e) {
 
 
 $('.selection').on("click", function(e) {
+	console.debug('selection click', e);
 	var elm = $(e.currentTarget);
 	var selection = $('#selection').val(elm.data('val'));
 	App.fb.vote(function(success) {
