@@ -124,24 +124,24 @@ final class QuizController
      */
     public function index(Request $request, Response $response, $args)
     {
-        $this->handleLogin();
+//         $this->handleLogin();
         
-        if ($this->facebook->hasAccessToken()) {
-            try {
+//         if ($this->facebook->hasAccessToken()) {
+//             try {
                 
-                $this->logger->debug('facebook load data');
+//                 $this->logger->debug('facebook load data');
                 
-                $profile = $this->facebook->retriveProfile();
+//                 $profile = $this->facebook->retriveProfile();
                 
-                $friends = $this->facebook->retriveFriends();
+//                 $friends = $this->facebook->retriveFriends();
                 
-            } catch (\Exception $ex) {
+//             } catch (\Exception $ex) {
                 
-                $this->logger->error($ex->getMessage());
+//                 $this->logger->error($ex->getMessage());
                 
-                return $response->withRedirect($this->router->pathFor('login'));
-            }
-        }
+//                 return $response->withRedirect($this->router->pathFor('login'));
+//             }
+//         }
         
         $this->viewData['quiz'] = $this->quiz->getOptions(1);
         
