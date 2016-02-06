@@ -38,12 +38,22 @@ module.exports = function(grunt) {
 			}
 		},
 		imagemin : {
+			options : {
+				optimizationLevel : 7
+			},
 			dynamic : { // Another target
 				files : [ {
 					expand : true, // Enable dynamic expansion
-
 					src : [ 'images/*.{png,jpg}' ], // Actual patterns to match
 					dest : 'dist/' // Destination path prefix
+				} ]
+			},
+			all : { // Another target
+				files : [ {
+					expand : true,
+					cwd : 'release/',
+					src : [ '**/*.{png,jpg,gif}' ],
+					dest : 'dist/'
 				} ]
 			}
 		},
@@ -63,12 +73,12 @@ module.exports = function(grunt) {
 						width : 480,
 					} ]
 				},
-				
+
 				files : [ {
 					expand : true,
 					src : [ 'images/**/*.{jpg,gif,png}' ],
 					cwd : './',
-					dest : 'dist/'
+					dest : 'release/'
 				} ]
 			}
 		},
@@ -83,17 +93,20 @@ module.exports = function(grunt) {
 			},
 		},
 		cssmin : {
-//			options : {
-//				shorthandCompacting : true,
-//				roundingPrecision : -1
-//			},
+			//			options : {
+			//				shorthandCompacting : true,
+			//				roundingPrecision : -1
+			//			},
 			main : {
 				files : {
 					'dist/css/styles.min.css' : [ '../../bower_components/hover/css/hover.css', '../../bower_components/bootstrap/dist/css/bootstrap.css', 'css/styles.css', 'css/typography.css' ]
 				}
 			}
 		},
-		clean : [ "dist" ],
+		clean : {
+			dist : [ "dist" ],
+			release : [ "release" ]
+		},
 		watch : {
 			files : [ '<%= jshint.files %>', 'css/*.css' ],
 			tasks : [ 'compile' ]
@@ -115,8 +128,11 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('test', [ 'jshint' ]);
 
-	grunt.registerTask('compile', [ 'jshint', 'copy', 'concat', 'uglify', 'cssmin' ]);
+	grunt.registerTask('js', [ 'jshint', 'copy', 'concat', 'uglify' ]);
+	grunt.registerTask('css', [ 'cssmin' ]);
+	grunt.registerTask('images', [ 'responsive_images', 'imagemin' ,'clean:release' ]);
 
-	grunt.registerTask('default', [ 'clean', 'compile', 'responsive_images', 'imagemin' ]);
+	grunt.registerTask('compile', [ 'js', 'css' ]);
+	grunt.registerTask('default', [ 'clean', 'compile', 'images' ]);
 
 };
