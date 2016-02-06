@@ -83,10 +83,10 @@ module.exports = function(grunt) {
 			},
 		},
 		cssmin : {
-			options : {
-				shorthandCompacting : false,
-				roundingPrecision : -1
-			},
+//			options : {
+//				shorthandCompacting : true,
+//				roundingPrecision : -1
+//			},
 			main : {
 				files : {
 					'dist/css/styles.min.css' : [ '../../bower_components/hover/css/hover.css', '../../bower_components/bootstrap/dist/css/bootstrap.css', 'css/styles.css', 'css/typography.css' ]
