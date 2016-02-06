@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 				separator : ';'
 			},
 			dist : {
-				src : [ '../../bower_components/console-polyfill/index.js', '../../bower_components/jquery/dist/jquery.js', 'js/app.js' ],
+				src : [ '../../bower_components/console-polyfill/index.js', '../../bower_components/picturefill/dist/picturefill.min.js', '../../bower_components/jquery/dist/jquery.js', 'js/app.js' ],
 				dest : 'dist/js/app.dist.js'
 			}
 		},
