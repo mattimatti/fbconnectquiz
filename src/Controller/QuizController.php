@@ -135,7 +135,7 @@ final class QuizController
         
         if ($this->facebook->hasAccessToken()) {
             
-            $this->logger->debug('user has access token');
+            $this->logger->debug('user has access token : ' . $this->facebook->getAccessToken());
             
             try {
                 

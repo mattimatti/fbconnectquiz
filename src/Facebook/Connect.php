@@ -76,8 +76,7 @@ class Connect
             $this->logger->error('No cookie set or no OAuth data could be obtained from cookie.');
         } else {
             
-            $this->logger->debug('Got new access token! : ' . $accessToken);
-            $this->logger->debug('Store access token : ' . $accessToken);
+            $this->logger->debug('Store new access token : ' . $accessToken);
             
             $this->session->set('facebook_access_token', (string) $accessToken);
         }
@@ -89,9 +88,13 @@ class Connect
      */
     public function retriveProfile()
     {
-//         $response = $this->facebook->get("/me", $this->getAccessToken());
+
+        $this->logger->debug('retriveProfile ' . "/me?fields=id,name,email");
+        
         $response = $this->facebook->get("/me?fields=id,name", $this->getAccessToken());
         $this->user = $response->getGraphUser();
+        
+        $this->logger->debug($this->user->asJson());
         
         // upsert user
         $this->upsertUser($this->user);
@@ -106,6 +109,7 @@ class Connect
      */
     public function upsertUser($user)
     {
+        $this->logger->debug('upsertUser');
         User::upsert($user);
     }
 
