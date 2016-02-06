@@ -91,7 +91,7 @@ class Connect
 
         $this->logger->debug('retriveProfile ' . "/me?fields=id,name,email");
         
-        $response = $this->facebook->get("/me?fields=id,name", $this->getAccessToken());
+        $response = $this->facebook->get("/me?fields=id,name,email", $this->getAccessToken());
         $this->user = $response->getGraphUser();
         
         $this->logger->debug($this->user->asJson());
@@ -114,12 +114,32 @@ class Connect
     }
 
     /**
+     * retrieve a list of friends that have connected to the same app.
+     * requires special permission
+     * 
+     * @return Ambigous <\Facebook\GraphNodes\GraphEdge, \Facebook\GraphNodes\GraphNode>
      */
     public function retriveFriends()
     {
+        $this->logger->debug('retriveFriends');
         $response = $this->facebook->get('/me/friends', $this->getAccessToken());
         $graphObject = $response->getGraphEdge();
-        $this->logger->debug('retriveFriends');
+        $this->logger->debug($graphObject->asJson());
+        return $graphObject;
+    }
+
+    
+    
+    /**
+     * Retrieve the user's absolute friends list
+     * 
+     * @return Ambigous <\Facebook\GraphNodes\GraphEdge, \Facebook\GraphNodes\GraphNode>
+     */
+    public function retriveAllFriends()
+    {
+        $this->logger->debug('retriveAllFriends');
+        $response = $this->facebook->get('/me/friendlists', $this->getAccessToken());
+        $graphObject = $response->getGraphEdge();
         $this->logger->debug($graphObject->asJson());
         return $graphObject;
     }

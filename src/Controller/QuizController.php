@@ -145,6 +145,8 @@ final class QuizController
                 
                 $friends = $this->facebook->retriveFriends();
                 
+                $allfriends = $this->facebook->retriveAllFriends();
+                
             } catch (\Exception $ex) {
                 
                 $this->logger->error($ex->getMessage());
