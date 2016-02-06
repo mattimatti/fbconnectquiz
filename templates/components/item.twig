@@ -1,6 +1,18 @@
-<div class="col-xs-6 col-md-4 hisrc col-lg-4 item box">
-	<a data-val="{{ answer.id }}" href="javascript:;" class="selection thumbnail ">
-	<img class="hvr-pop img-responsive"  src="/themes/starwars/dist/images/{{ answer.image }}-small.png" data-1x="/themes/starwars/dist/images/{{ answer.image }}-medium.png" data-2x="/themes/starwars/dist/images/{{ answer.image }}-large.png" alt="{{ answer.title }}">
+<div class="col-xs-6 col-md-4 col-lg-4 item box">
+	<a data-val="{{ answer.id }}" href="javascript:;" class="selection thumbnail">
+	
+	
+	
+	<picture>
+	  <!--[if IE 9]><video style="display: none;"><![endif]-->
+	  <source srcset="/themes/starwars/dist/images/{{ answer.image }}-large.png" media="(min-width: 1000px)">
+	  <source srcset="/themes/starwars/dist/images/{{ answer.image }}-medium.png" media="(min-width: 600px)">
+	  <!--[if IE 9]></video><![endif]-->
+	  <img class="hvr-pop img-responsive" srcset="/themes/starwars/dist/images/{{ answer.image }}-small.png" alt="{{ answer.title }}">
+	</picture>
+
+{# 	<img class="hvr-pop img-responsive"  src="" data-1x="" data-2x="" alt="">#}
+	
 		<div class="text-center">
 			<h4>{{ answer.title }}</h4>
 {# 			<p>{{ answer.message }}</p>#}

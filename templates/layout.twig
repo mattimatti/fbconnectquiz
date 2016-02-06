@@ -16,6 +16,13 @@
 {% endblock %}
 
 
+<script>
+    // Picture element HTML5 shiv
+    document.createElement( "picture" );
+</script>
+  
+  
+
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
 
@@ -27,7 +34,7 @@
 	<div class="container">{% block content %} {% endblock %}</div>
 
 	<script type="text/javascript" src="/themes/{{ theme }}/dist/js/app.dist.min.js"></script>
-	<script type="text/javascript" src="/bower_components/hisrc/hisrc.js"></script>
+	<script type="text/javascript" src="/bower_components/picturefill/dist/picturefill.min.js"></script>
 
 	<script type="text/javascript">
 
@@ -45,11 +52,7 @@
 		
 	}
 
-// 	$.hisrc.speedTest();
 
-// 	$(document).ready(function(){
-// 		$(".hisrc img").hisrc();
-// 	});
 	
 	
 	</script>

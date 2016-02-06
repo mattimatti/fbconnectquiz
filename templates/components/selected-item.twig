@@ -5,7 +5,12 @@
 			</div>
 
 			<div class="text-center mt30 thumbnail">
-				<img class="" src="/themes/{{ theme }}/dist/images/{{ answer.image }}-large.png" alt="{{ answer.title }}">
+			    	<picture>
+				  <!--[if IE 9]><video style="display: none;"><![endif]-->
+				  <source srcset="/themes/starwars/dist/images/{{ answer.image }}-large.png" media="(min-width: 600px)">
+				  <!--[if IE 9]></video><![endif]-->
+				  <img class="" srcset="/themes/starwars/dist/images/{{ answer.image }}-medium.png" alt="{{ answer.title }}">
+				</picture>
 			</div>
 
 			<div class="text-center mt30">
