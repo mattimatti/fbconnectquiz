@@ -87,11 +87,18 @@ final class QuizController
         $this->viewData['quiz'] = $this->quiz->getOptions(1);
         
         if (isset($_POST['selection'])) {
+            
+           $this->logger->debug('evaluate user selection : ' . $selected);
+            
             $selectedAnswer = $this->quiz->getAnswer(1, $selected);
             if ($selectedAnswer) {
+                
+                $this->logger->debug('Found answer, display result');
+                
                 $this->viewData['answer'] = $selectedAnswer;
                 $this->viewData['selecteditem'] = true;
                 $this->viewData['shareurl'] = $this->settings['baseDomain'] .'/shared/'.$selectedAnswer->getId();
+                
                 return $this->view->render($response, 'index.twig', $this->viewData);
             }
         }
@@ -124,24 +131,29 @@ final class QuizController
      */
     public function index(Request $request, Response $response, $args)
     {
-//         $this->handleLogin();
+        $this->handleLogin();
         
-//         if ($this->facebook->hasAccessToken()) {
-//             try {
+        if ($this->facebook->hasAccessToken()) {
+            
+            $this->logger->debug('user has access token');
+            
+            try {
                 
-//                 $this->logger->debug('facebook load data');
+                $this->logger->debug('facebook load data');
                 
-//                 $profile = $this->facebook->retriveProfile();
+                $profile = $this->facebook->retriveProfile();
                 
-//                 $friends = $this->facebook->retriveFriends();
+                $friends = $this->facebook->retriveFriends();
                 
-//             } catch (\Exception $ex) {
+            } catch (\Exception $ex) {
                 
-//                 $this->logger->error($ex->getMessage());
+                $this->logger->error($ex->getMessage());
                 
-//                 return $response->withRedirect($this->router->pathFor('login'));
-//             }
-//         }
+                return $response->withRedirect($this->router->pathFor('login'));
+            }
+        }
+
+        $this->logger->debug('render quiz page');
         
         $this->viewData['quiz'] = $this->quiz->getOptions(1);
         
