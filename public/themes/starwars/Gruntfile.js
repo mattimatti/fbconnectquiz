@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 				separator : ';'
 			},
 			dist : {
-				src : [ '../../bower_components/console-polyfill/index.js', '../../bower_components/picturefill/dist/picturefill.min.js', '../../bower_components/zepto/zepto.js', 'js/app.js' ],
+				src : [ 'bower_components/console-polyfill/index.js', 'bower_components/picturefill/dist/picturefill.min.js', 'bower_components/zepto/zepto.js', 'js/app.js' ],
 				dest : 'dist/js/app.dist.js'
 			}
 		},
@@ -86,7 +86,7 @@ module.exports = function(grunt) {
 			main : {
 				files : [ {
 					expand : true,
-					cwd : '../../bower_components/bootstrap/dist/',
+					cwd : 'bower_components/bootstrap/dist/',
 					src : [ '**/*' ],
 					dest : 'dist/'
 				} ],
@@ -99,7 +99,7 @@ module.exports = function(grunt) {
 			//			},
 			main : {
 				files : {
-					'dist/css/styles.min.css' : [ '../../bower_components/hover/css/hover.css', '../../bower_components/bootstrap/dist/css/bootstrap.css', 'css/styles.css', 'css/typography.css' ]
+					'dist/css/styles.min.css' : [ 'css/styles.css' ]
 				}
 			}
 		},
@@ -108,10 +108,26 @@ module.exports = function(grunt) {
 			release : [ "release" ]
 		},
 		watch : {
-			files : [ '<%= jshint.files %>', 'css/*.css' ],
-			tasks : [ 'compile' ]
+			js : {
+				files : [ '<%= jshint.files %>' ],
+				tasks : [ 'js' ]
+			},
+			css : {
+				files : [ 'sass/*.*' ],
+				tasks : [ 'css' ]
+			},
+			images : {
+				files : [ 'images/*.*' ],
+				tasks : [ 'images' ]
+			}
+		},
+		sass : {
+			dist : {
+				files : {
+					'css/styles.css' : 'sass/styles.scss'
+				}
+			}
 		}
-
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -125,12 +141,13 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-resize-crop');
 	grunt.loadNpmTasks('grunt-responsive-images');
+	grunt.loadNpmTasks('grunt-contrib-sass');
 
 	grunt.registerTask('test', [ 'jshint' ]);
 
 	grunt.registerTask('js', [ 'jshint', 'copy', 'concat', 'uglify' ]);
-	grunt.registerTask('css', [ 'cssmin' ]);
-	grunt.registerTask('images', [ 'responsive_images', 'imagemin' ,'clean:release' ]);
+	grunt.registerTask('css', [ 'sass', 'cssmin' ]);
+	grunt.registerTask('images', [ 'responsive_images', 'imagemin', 'clean:release' ]);
 
 	grunt.registerTask('compile', [ 'js', 'css' ]);
 	grunt.registerTask('default', [ 'clean', 'compile', 'images' ]);

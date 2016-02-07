@@ -1,0 +1,96 @@
+@import "dependencies";
+@import "dependencies";
+
+
+body {
+	background-color: #000;
+	background-image: url('../images/share.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+	color: white !important;
+}
+
+a,a:hover,a:visited {
+	color: white;
+}
+
+.selecteditemcontainer {
+	width: 100%;
+	background-color: #000;
+}
+
+.selecteditem {
+	background-color: rgba(255, 255, 0, 0.1);
+	padding: 30px;
+}
+
+.mt30 {
+	margin-top: 30px;
+}
+
+.mt50 {
+	margin-top: 50px;
+}
+
+.box {
+	overflow: hidden;
+	text-decoration: none;
+}
+
+img.thumbnail,.thumbnail,.thumbnail>img {
+	border: 0 !important;
+	background-color: none;
+}
+
+.item.box a {
+	text-decoration: none;
+	background-color: rgba(0, 0, 0, 0.9);
+}
+
+h5 {
+	font-size: 1.2em;
+}
+
+/* ********  LOGIN ***************/
+.login {
+	margin-top: 60%;
+}
+
+.logout {
+	margin-top: 5%;
+}
+
+/* ********  MEDIA QUERIES ***************/
+@media ( max-width :400px) {
+	h1 {
+		font-size: 1.1em;
+	}
+	.mt50 {
+		margin-top: 5px;
+	}
+	.mt30 {
+		margin-top: 2px;
+	}
+	h4 {
+		font-size: 1em;
+	}
+}
+
+@media ( min-width :768px) {
+	h4 {
+		font-size: 1.2em;
+	}
+}
+
+@media ( min-width :992px) {
+	.login {
+		margin-top: 40%;
+	}
+}
+
+@media ( min-width :1200px) {
+	.login {
+		margin-top: 40%;
+	}
+}

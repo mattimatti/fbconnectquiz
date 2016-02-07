@@ -1,0 +1,25 @@
+{
+  "name": "starwars",
+  "description": "",
+  "main": "",
+  "authors": [
+    "mattimatti"
+  ],
+  "license": "commercial",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "^3.3.6",
+    "console-polyfill": "^0.2.2",
+    "picturefill": "^3.0.1",
+    "hover": "^2.0.2",
+    "bootstrap": "~3.3.6",
+    "zepto": "^1.1.6"
+  }
+}
