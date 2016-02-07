@@ -2,8 +2,12 @@
 @import "dependencies";
 
 
+$black:              #000;
+$white:              #fff;
+
+
 body {
-	background-color: #000;
+	background-color: $black;
 	background-image: url('../images/share.png');
 	background-repeat: no-repeat;
 	background-size: contain;
@@ -12,12 +16,12 @@ body {
 }
 
 a,a:hover,a:visited {
-	color: white;
+	color: $white;
 }
 
 .selecteditemcontainer {
 	width: 100%;
-	background-color: #000;
+	background-color: $black;
 }
 
 .selecteditem {

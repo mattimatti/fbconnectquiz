@@ -1609,6 +1609,7 @@ window.$ === undefined && (window.$ = Zepto)
     }
   }
 })(Zepto)
+;
 ;var FacebookApp = function(scopes, baseUrl) {
 	this.baseUrl = baseUrl;
 	this.scopes = scopes;

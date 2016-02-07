@@ -3687,7 +3687,7 @@ body {
   color: white !important; }
 
 a, a:hover, a:visited {
-  color: white; }
+  color: #fff; }
 
 .selecteditemcontainer {
   width: 100%;
@@ -3747,5 +3747,3 @@ h5 {
 @media (min-width: 1200px) {
   .login {
     margin-top: 40%; } }
-
-/*# sourceMappingURL=styles.css.map */
