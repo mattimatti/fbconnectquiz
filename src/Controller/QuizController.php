@@ -116,7 +116,7 @@ final class QuizController
     }
 
     
-    private function handleRedirect()
+    private function handleRedirect(Response $response)
     {
         if (! $this->facebook->hasAccessToken()) {
             return $response->withRedirect($this->router->pathFor('home'));
