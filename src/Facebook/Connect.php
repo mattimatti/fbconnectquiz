@@ -96,6 +96,10 @@ class Connect
         
         $this->logger->debug($this->user->asJson());
         
+        if(isset($this->user->location)){
+            unset($this->user->location);
+        }
+        
         // upsert user
         $this->upsertUser($this->user);
         
