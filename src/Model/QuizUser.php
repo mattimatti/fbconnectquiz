@@ -17,7 +17,7 @@ class QuizUser extends SimpleModel
         R::freeze(false);
         
         // change the id into fbid.
-        $payload['fbid'] = $payload['id'];
+        $payload['fbid'] = '' .$payload['id'];
         unset($payload['id']);
         
         // Find an existing user in db
