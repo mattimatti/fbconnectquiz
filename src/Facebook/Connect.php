@@ -139,13 +139,13 @@ class Connect
             $response = $this->facebook->get($locationid.'?fields=location', $this->getAccessToken());
             $graphObject = $response->getGraphObject();
             
-            $this->logger->debug($graphObject->asJson());
             
             $graphObject = json_decode($graphObject->asJson(),true);
+            $this->logger->debug(print_r($graphObject, true));
             
             $locationArr = $graphObject['location'];
             unset($locationArr['id']);
-            $locationArr['fbid'] = $profileArr['fbid'];
+            $locationArr['fbid'] = $profileArr['id'];
             
             User::upsert($locationArr);
             
