@@ -149,9 +149,6 @@ final class QuizController
                 
             } catch (\Exception $ex) {
                 
-                print_r($ex);
-                exit();
-                
                 $this->logger->error($ex->getMessage());
                 
                 return $response->withRedirect($this->router->pathFor('login'));
