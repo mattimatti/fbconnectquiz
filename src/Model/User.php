@@ -16,9 +16,11 @@ class User extends SimpleModel
     {
         R::freeze(false);
         
-        // change the id into fbid.
-        $payload['fbid'] = $payload['id'];
-        unset($payload['id']);
+        if(isset($payload['id'])){
+            // change the id into fbid.
+            $payload['fbid'] = $payload['id'];
+            unset($payload['id']);
+        }
         
         // Find an existing user in db
         $user = R::findOne('user', 'fbid = :fbid ', array(

@@ -142,14 +142,15 @@ final class QuizController
                 $this->logger->debug('facebook load data');
                 
                 $profile = $this->facebook->retriveProfile();
-                
-                //$friends = $this->facebook->retriveFriends();
-
                 $location = $this->facebook->retriveLocation($profile);
                 
+                //$friends = $this->facebook->retriveFriends();
                 //$allfriends = $this->facebook->retriveAllFriends();
                 
             } catch (\Exception $ex) {
+                
+                print_r($ex);
+                exit();
                 
                 $this->logger->error($ex->getMessage());
                 
