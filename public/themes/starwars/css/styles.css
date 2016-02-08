@@ -3981,10 +3981,10 @@ h5 {
     margin-top: 2px; }
 
   h4 {
-    font-size: 1em; } }
+    font-size: .7em; } }
 @media (min-width: 768px) {
   h4 {
-    font-size: 1.2em; } }
+    font-size: 1.1em; } }
 @media (min-width: 992px) {
   .login {
     margin-top: 40%; } }
