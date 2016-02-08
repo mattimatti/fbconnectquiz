@@ -76,6 +76,19 @@ class QuizService
         $answer->{QUESTION} = $question;
         R::store($answer);
         
+        
+        
+        $quiz_user = array(
+            array('id'=>1,'createdate'=>'2016-02-08 19:20:37','name'=>'Matteo Monti','email'=>'mmonti@gmail.com','gender'=>'male','ip'=>'151.237.238.110','fbid'=>'1a0154491551609838e16','lastupdate'=>'2016-02-08 19:20:37','city'=>'Lecco','country'=>'Italy','latitude'=>45.85,'longitude'=>9.38333)
+        );
+        
+        $user = R::xdispense(USER);
+        $user->import($quiz_user);
+        R::store($user);
+        
+        R::wipe(USER);
+        
+        
         R::freeze(true);
         
         return $quiz;
