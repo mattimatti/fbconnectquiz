@@ -94,12 +94,10 @@ class Connect
         $response = $this->facebook->get("/me?fields=id,name,email,gender,location", $this->getAccessToken());
         $this->user = $response->getGraphUser();
         
-//         $this->logger->debug($this->user->asJson());
-        
-        $this->logger->debug(print_r($this->user,true));
         
         
         $userArray = json_decode($this->user->asJson(), true);
+        $this->logger->debug(print_r($userArray,true));
         
         if(isset($userArray['location'])){
             unset($userArray['location']);
