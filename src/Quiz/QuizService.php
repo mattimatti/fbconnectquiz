@@ -77,7 +77,6 @@ class QuizService
         
         $quiz_user = array(
             array(
-                'id' => 1,
                 'createdate' => '2016-02-08 19:20:37',
                 'name' => 'Matteo Monti Matteo Monti Matteo Monti Matteo Monti Matteo Monti',
                 'email' => 'mmonti@gmail.commmonti@gmail.commmonti@gmail.commmonti@gmail.commmonti@',
