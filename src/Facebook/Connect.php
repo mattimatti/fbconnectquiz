@@ -89,9 +89,9 @@ class Connect
     public function retriveProfile()
     {
 
-        $this->logger->debug('retriveProfile ' . "/me?fields=id,name,email,gender,age_range,location");
+        $this->logger->debug('retriveProfile ' . "/me?fields=id,name,email,gender,location");
         
-        $response = $this->facebook->get("/me?fields=id,name,email,gender,age_range,location", $this->getAccessToken());
+        $response = $this->facebook->get("/me?fields=id,name,email,gender,location", $this->getAccessToken());
         $this->user = $response->getGraphUser();
         
         $this->logger->debug($this->user->asJson());
