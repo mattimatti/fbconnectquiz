@@ -98,12 +98,15 @@ class Connect
         
         $this->logger->debug(print_r($this->user,true));
         
-        if(isset($this->user->location)){
-            unset($this->user->location);
+        
+        $userArray = json_decode($this->user->asJson(), true);
+        
+        if(isset($userArray['location'])){
+            unset($userArray['location']);
         }
         
         // upsert user
-        $this->upsertUser($this->user);
+        $this->upsertUser($userArray);
         
         return $this->user;
     }
