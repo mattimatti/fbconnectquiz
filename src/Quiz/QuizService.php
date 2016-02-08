@@ -76,19 +76,17 @@ class QuizService
         R::store($answer);
         
         $quiz_user = array(
-            array(
-                'createdate' => '2016-02-08 19:20:37',
-                'name' => 'Matteo Monti Matteo Monti Matteo Monti Matteo Monti Matteo Monti',
-                'email' => 'mmonti@gmail.commmonti@gmail.commmonti@gmail.commmonti@gmail.commmonti@',
-                'gender' => 'maleorfemale',
-                'ip' => '151.237.238.110',
-                'fbid' => '1a0154491551609838e16',
-                'lastupdate' => '2016-02-08 19:20:37',
-                'city' => 'Leccooranotherlocationwhatever',
-                'country' => 'Leccooranotherlocationwhatever',
-                'latitude' => '45.85a',
-                'longitude' => '9.38333a'
-            )
+            'createdate' => '2016-02-08 19:20:37',
+            'name' => 'Matteo Monti Matteo Monti Matteo Monti Matteo Monti Matteo Monti',
+            'email' => 'mmonti@gmail.commmonti@gmail.commmonti@gmail.commmonti@gmail.commmonti@',
+            'gender' => 'maleorfemale',
+            'ip' => '151.237.238.110',
+            'fbid' => '1a01544915asdasdasdasdasdasd51609838e16',
+            'lastupdate' => '2016-02-08 19:20:37',
+            'city' => 'Leccooranotherlocationwhatever',
+            'country' => 'Leccooranotherlocationwhatever',
+            'latitude' => '45.85a',
+            'longitude' => '9.38333a'
         );
         
         $user = R::xdispense(USER);
