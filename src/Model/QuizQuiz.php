@@ -3,7 +3,12 @@ namespace App\Model;
 
 use RedBeanPHP\SimpleModel;
 
-class Quiz extends SimpleModel
+/**
+ *
+ * @author mattimatti
+ *        
+ */
+class QuizQuiz extends SimpleModel
 {
 
     /**
@@ -12,8 +17,18 @@ class Quiz extends SimpleModel
      */
     public function question()
     {
-        $questions = $this->ownQuestion;
+        $questions = $this->questions();
         return array_shift($questions);
+    }
+
+    
+    /**
+     *
+     * @return Question[]
+     */
+    public function questions()
+    {
+       return $this->ownQuizQuestion;
     }
 
     /**
@@ -22,7 +37,7 @@ class Quiz extends SimpleModel
      */
     public function answers()
     {
-        return $this->ownAnswerList;
+        return $this->ownQuizAnswerList;
     }
 
     /**

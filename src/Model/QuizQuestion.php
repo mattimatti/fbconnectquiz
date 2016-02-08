@@ -3,7 +3,7 @@ namespace App\Model;
 
 use RedBeanPHP\SimpleModel;
 
-class Answer extends SimpleModel
+class QuizQuestion extends SimpleModel
 {
 
     /**

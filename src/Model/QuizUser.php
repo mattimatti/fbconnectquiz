@@ -4,7 +4,7 @@ namespace App\Model;
 use RedBeanPHP\SimpleModel;
 use RedBeanPHP\R;
 
-class User extends SimpleModel
+class QuizUser extends SimpleModel
 {
 
     /**
@@ -21,7 +21,7 @@ class User extends SimpleModel
         unset($payload['id']);
         
         // Find an existing user in db
-        $user = R::findOne('user', 'fbid = :fbid ', array(
+        $user = R::findOne(USER, 'fbid = :fbid ', array(
             ':fbid' => $payload['fbid']
         ));
         
@@ -29,7 +29,7 @@ class User extends SimpleModel
         $currentDate = new \DateTime();
         
         if (! $user) {
-            $user = R::dispense('user');
+            $user = R::xdispense(USER);
             $user->createdate = $currentDate->format('Y-m-d H:i:s');
         }
         

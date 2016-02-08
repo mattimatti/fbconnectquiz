@@ -2,7 +2,7 @@
 
 
 {% block facebook %} 
-	<meta property="og:title" content="Which Star Wars Character Are You?!" />
+	<meta property="og:title" content="{{ quiz.question.title }}" />
 	<meta property="og:description" content="" />
 
 	{% if selecteditem %} 
@@ -23,7 +23,6 @@
 
 
 <!-- Block Question  -->
-
 <div id="question mt50" class="text-center">
 	<h1>{{ quiz.question.title }}</h1>
 </div>

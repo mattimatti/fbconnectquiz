@@ -60,6 +60,26 @@ $container['database'] = function ($c)
     $logger = $c->get('logger');
     $settings = $c->get('settings')['database'];
     
+    define('QUESTION', 'quiz_question');
+    define('ANSWER', 'quiz_answer');
+    define('QUIZ', 'quiz_quiz');
+    define('USER', 'quiz_user');
+    
+    
+    
+    
+    // Create an extension to by-pass security check in R::dispense
+    R::ext('xdispense', function ($type)
+    {
+        return R::getRedBean()->dispense($type);
+    });
+    
+    R::renameAssociation([
+        'quiz_answer_quiz_question' => 'quiz_answer_question',
+        'quiz_answer_quiz_quiz' => 'quiz_answer_quiz',
+        'quiz_question_quiz_quiz' => 'quiz_question_quiz'
+    ]);
+    
     define('REDBEAN_MODEL_PREFIX', '\\App\\Model\\');
     
     $connectionString = 'mysql:host=' . $settings['host'] . ';dbname=' . $settings['dbname'];
@@ -67,6 +87,8 @@ $container['database'] = function ($c)
     R::setup($connectionString, $settings['username'], $settings['password']);
     
     R::useWriterCache(true);
+    
+    //R::debug(true);
     
     // // NEVER REMOVE THIS!
     R::freeze(true);

@@ -8,7 +8,7 @@ use Facebook\Exceptions\FacebookResponseException;
 use Monolog\Logger;
 use Facebook\FacebookRequest;
 use RedBeanPHP\R;
-use App\Model\User;
+use App\Model\QuizUser;
 
 class Connect
 {
@@ -119,7 +119,7 @@ class Connect
     public function upsertUser($user)
     {
         $this->logger->debug('upsertUser');
-        User::upsert($user);
+        QuizUser::upsert($user);
     }
     
     
@@ -172,7 +172,7 @@ class Connect
             $this->logger->debug('Upsert user');
             $this->logger->debug(print_r($locationArr, true));
             
-            User::upsert($locationArr);
+            QuizUser::upsert($locationArr);
             
             return $graphObject;
         }
