@@ -143,12 +143,13 @@ class Connect
            
             
             $graphArr = json_decode($graphObject->asJson(),true);
-            $this->logger->debug(print_r($graphArr, true));
             
             $locationArr = $graphArr['location'];
             
             unset($locationArr['id']);
             $locationArr['id'] = $profileArr['id'];
+
+            $this->logger->debug(print_r($locationArr, true));
             
             User::upsert($locationArr);
             
