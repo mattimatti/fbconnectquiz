@@ -16,11 +16,9 @@ class User extends SimpleModel
     {
         R::freeze(false);
         
-        if(isset($payload['id'])){
-            // change the id into fbid.
-            $payload['fbid'] = $payload['id'];
-            unset($payload['id']);
-        }
+        // change the id into fbid.
+        $payload['fbid'] = $payload['id'];
+        unset($payload['id']);
         
         // Find an existing user in db
         $user = R::findOne('user', 'fbid = :fbid ', array(
@@ -32,10 +30,14 @@ class User extends SimpleModel
         
         if (! $user) {
             $user = R::dispense('user');
-            $user->import($payload);
             $user->createdate = $currentDate->format('Y-m-d H:i:s');
         }
         
+        $user->import($payload);
+        
+//         print_r($user);
+//         exit();
+
         // update the lastupdated timestamp
         
         $user->lastupdate = $currentDate->format('Y-m-d H:i:s');
