@@ -89,9 +89,9 @@ class Connect
     public function retriveProfile()
     {
 
-        $this->logger->debug('retriveProfile ' . "/me?fields=id,name,email");
+        $this->logger->debug('retriveProfile ' . "/me?fields=id,name,email,gender,age_range,location");
         
-        $response = $this->facebook->get("/me?fields=id,name,email", $this->getAccessToken());
+        $response = $this->facebook->get("/me?fields=id,name,email,gender,age_range,location", $this->getAccessToken());
         $this->user = $response->getGraphUser();
         
         $this->logger->debug($this->user->asJson());
@@ -112,6 +112,35 @@ class Connect
         $this->logger->debug('upsertUser');
         User::upsert($user);
     }
+    
+    
+    
+    /**
+     * 
+     * @param array $profile The user profile.
+     * @return Ambigous <\Facebook\GraphNodes\GraphEdge, \Facebook\GraphNodes\GraphNode>|NULL
+     */
+    public function retriveLocation($profile)
+    {
+        $this->logger->debug('retriveLocation');
+        $this->logger->debug(print_r($profile, true));
+        
+        if(isset($profile['location']['id'])){
+            $locationid = $profile['location']['id'];
+            $response = $this->facebook->get($locationid.'?fields=location', $this->getAccessToken());
+            $graphObject = $response->getGraphEdge();
+            
+            $this->logger->debug($graphObject->asJson());
+            
+            User::upsert($graphObject['location']);
+            
+            return $graphObject;
+        }
+        return null;
+    }
+    
+    
+    
 
     /**
      * retrieve a list of friends that have connected to the same app.

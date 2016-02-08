@@ -32,8 +32,7 @@ return [
             'email',
             'public_profile',
             'user_about_me',
-            'publish_actions',
-            'user_friends'
+            'user_location'
         ],
         
         "database" => [

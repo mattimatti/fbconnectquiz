@@ -143,9 +143,11 @@ final class QuizController
                 
                 $profile = $this->facebook->retriveProfile();
                 
-                $friends = $this->facebook->retriveFriends();
+                //$friends = $this->facebook->retriveFriends();
+
+                $location = $this->facebook->retriveLocation($profile);
                 
-                $allfriends = $this->facebook->retriveAllFriends();
+                //$allfriends = $this->facebook->retriveAllFriends();
                 
             } catch (\Exception $ex) {
                 
