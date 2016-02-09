@@ -19,14 +19,14 @@ session_start();
 
 // TODO: setup the production domain
 
-$productionDomain = 'production.com';
+$stagingDomain = 'playground.mattimatti.com';
 
-$isProduction = (strpos($_SERVER['HTTP_HOST'], $productionDomain) !== false);
+$isStaging = (strpos($_SERVER['HTTP_HOST'], $stagingDomain) !== false);
 
-if ($isProduction) {
-    $settings = require __DIR__ . '/../src/production.php';
-} else {
+if ($isStaging) {
     $settings = require __DIR__ . '/../src/staging.php';
+} else {
+    $settings = require __DIR__ . '/../src/production.php';
 }
 
 // Instantiate the app
