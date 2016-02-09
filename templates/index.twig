@@ -2,13 +2,14 @@
 
 
 {% block facebook %} 
-	<meta property="og:title" content="{{ quiz.question.title }}" />
 
 	{% if selecteditem %} 
 	   <meta property="og:image" content="{{ settings.baseDomain }}/themes/{{ theme }}/dist/images/{{ answer.image }}-large.png"/>
 	   <meta property="og:url" content="{{ shareurl }}"/>
-	   <meta property="og:description" content="I'm {{ answer.title }} {{ answer.message }}" />
+	   <meta property="og:title" content="{{ quiz.question.title }}" />
+	   <meta property="og:description" content="{{ answer.sharemessage }}" />
 	{% else %}
+	<meta property="og:title" content="{{ quiz.question.title }}" />
 	   <meta property="og:image" content="{{ settings.baseDomain }}/themes/{{ theme }}/dist/images/share-large.png"/>
 	   <meta property="og:url" content="{{ settings.baseDomain }}"/>
 		<meta property="og:description" content="" />
