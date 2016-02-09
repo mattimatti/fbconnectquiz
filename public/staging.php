@@ -11,30 +11,21 @@ if (PHP_SAPI == 'cli-server') {
 require __DIR__ . '/../vendor/autoload.php';
 
 error_reporting(E_ALL);
-ini_set("display_errors", "On");
-ini_set("display_startup_errors", "On");
+ini_set("display_errors","On");
+ini_set("display_startup_errors","On");
 date_default_timezone_set("Europe/London");
 
 session_start();
 
-// TODO: setup the production domain
-
-$productionDomain = 'production.com';
-
-$isProduction = (strpos($_SERVER['HTTP_HOST'], $productionDomain) !== false);
-
-if ($isProduction) {
-    $settings = require __DIR__ . '/../src/production.php';
-} else {
-    $settings = require __DIR__ . '/../src/staging.php';
-}
 
 // Instantiate the app
+$settings = require __DIR__ . '/../src/staging.php';
 
-// print_r($settings);
-// exit();
+//print_r($settings);
+//exit();
 
 $app = new \Slim\App($settings);
+
 
 // Set up dependencies
 require __DIR__ . '/../src/dependencies.php';
