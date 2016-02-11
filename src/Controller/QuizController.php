@@ -201,4 +201,15 @@ final class QuizController
         $data = $this->quiz->populate();
         return $response->withRedirect($this->router->pathFor('login'));
     }
+
+    /**
+     *
+     * @param Request $request            
+     * @param Response $response            
+     * @param unknown $args            
+     */
+    public function privacy(Request $request, Response $response, $args)
+    {
+        return $this->view->render($response, 'index.twig', $this->viewData);
+    }
 }
