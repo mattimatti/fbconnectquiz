@@ -210,6 +210,6 @@ final class QuizController
      */
     public function privacy(Request $request, Response $response, $args)
     {
-        return $this->view->render($response, 'index.twig', $this->viewData);
+        return $this->view->render($response, 'privacy.twig', $this->viewData);
     }
 }
