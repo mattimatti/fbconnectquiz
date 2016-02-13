@@ -16,7 +16,7 @@ use GeoIp2\Database\Reader;
 
 // This creates the Reader object, which should be reused across
 
-$reader = new Reader('GeoLite2-Country.mmdb');
+$reader = new Reader('../GeoLite2-Country.mmdb');
 
 
 if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
