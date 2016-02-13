@@ -9,6 +9,7 @@ use Monolog\Logger;
 use Facebook\FacebookRequest;
 use RedBeanPHP\R;
 use App\Model\QuizUser;
+use GeoIp2\Database\Reader;
 
 class Connect
 {
@@ -88,22 +89,19 @@ class Connect
      */
     public function retriveProfile()
     {
-
         $this->logger->debug('retriveProfile ' . "/me?fields=id,name,email,gender,location");
         
         $response = $this->facebook->get("/me?fields=id,name,email,gender,location", $this->getAccessToken());
         $this->user = $response->getGraphUser();
         
-        
-        
         $userArray = json_decode($this->user->asJson(), true);
-        $this->logger->debug(print_r($userArray,true));
+        $this->logger->debug(print_r($userArray, true));
         
-        if(isset($userArray['location'])){
+        if (isset($userArray['location'])) {
             unset($userArray['location']);
         }
         
-        $userArray['ip'] = ''.$this->get_ip_address();
+        $userArray['ip'] = '' . $this->get_ip_address();
         
         // upsert user
         $this->upsertUser($userArray);
@@ -113,7 +111,7 @@ class Connect
 
     /**
      * Store or update the User
-     * 
+     *
      * @param unknown $user            
      */
     public function upsertUser($user)
@@ -121,16 +119,23 @@ class Connect
         $this->logger->debug('upsertUser');
         QuizUser::upsert($user);
     }
-    
-    
-    
-    public function get_ip_address(){
-        foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
-            if (array_key_exists($key, $_SERVER) === true){
-                foreach (explode(',', $_SERVER[$key]) as $ip){
+
+    public function get_ip_address()
+    {
+        foreach (array(
+            'HTTP_CLIENT_IP',
+            'HTTP_X_FORWARDED_FOR',
+            'HTTP_X_FORWARDED',
+            'HTTP_X_CLUSTER_CLIENT_IP',
+            'HTTP_FORWARDED_FOR',
+            'HTTP_FORWARDED',
+            'REMOTE_ADDR'
+        ) as $key) {
+            if (array_key_exists($key, $_SERVER) === true) {
+                foreach (explode(',', $_SERVER[$key]) as $ip) {
                     $ip = trim($ip); // just to be safe
-    
-                    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
+                    
+                    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false) {
                         return $ip;
                     }
                 }
@@ -138,37 +143,90 @@ class Connect
         }
         return 'unknown';
     }
-    
-    
-    
-    
+
     /**
-     * 
-     * @param array $profile The user profile.
-     * @return Ambigous <\Facebook\GraphNodes\GraphEdge, \Facebook\GraphNodes\GraphNode>|NULL
+     *
+     * @param array $profile            
      */
     public function retriveLocation($profile)
     {
-        $this->logger->debug('retriveLocation');
+        return $this->retriveLocationFromIp($profile);
+        // return $this->retriveLocationFromFacebookApi($profile);
+    }
+
+    /**
+     * Read the location from the
+     *
+     * @param array $profile            
+     */
+    public function retriveLocationFromIp($profile)
+    {
+        $this->logger->debug('retriveLocationFromIp');
         $this->logger->debug(print_r($profile, true));
         
-        $profileArr = json_decode($profile->asJson(),true);
+        $profileArr = json_decode($profile->asJson(), true);
         
-        if(isset($profileArr['location']['id'])){
+        $ip = $this->get_ip_address();
+        
+        if ($ip != 'unknown') {
+            
+            $reader = new Reader('../GeoLite2-Country.mmdb');
+            
+            // if (! empty($_SERVER['HTTP_CLIENT_IP'])) {
+            // $ip = $_SERVER['HTTP_CLIENT_IP'];
+            // } elseif (! empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            // $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            // } else {
+            // $ip = $_SERVER['REMOTE_ADDR'];
+            // }
+            
+            $record = $reader->country($ip);
+            
+            if ($record->country) {
+                
+                $locationArr = array();
+                $locationArr['id'] = $profileArr['id'];
+                $locationArr['ip'] = $ip;
+                $locationArr['city'] = $record->country->name;
+                $locationArr['country'] = $record->country->isoCode;
+                $locationArr['latitude'] = '';
+                $locationArr['longitude'] = '';
+                
+                $this->logger->debug('Upsert user');
+                $this->logger->debug(print_r($locationArr, true));
+                
+                QuizUser::upsert($locationArr);
+            }
+        }
+    }
+
+    /**
+     *
+     * @param array $profile
+     *            The user profile.
+     * @return Ambigous <\Facebook\GraphNodes\GraphEdge, \Facebook\GraphNodes\GraphNode>|NULL
+     */
+    public function retriveLocationFromFacebookApi($profile)
+    {
+        $this->logger->debug('retriveLocationFromFacebookApi');
+        $this->logger->debug(print_r($profile, true));
+        
+        $profileArr = json_decode($profile->asJson(), true);
+        
+        if (isset($profileArr['location']['id'])) {
             
             $locationid = $profileArr['location']['id'];
             
-            $response = $this->facebook->get($locationid.'?fields=location', $this->getAccessToken());
+            $response = $this->facebook->get($locationid . '?fields=location', $this->getAccessToken());
             $graphObject = $response->getGraphObject();
-           
             
-            $graphArr = json_decode($graphObject->asJson(),true);
+            $graphArr = json_decode($graphObject->asJson(), true);
             
             $locationArr = $graphArr['location'];
             
             unset($locationArr['id']);
             $locationArr['id'] = $profileArr['id'];
-
+            
             $this->logger->debug('Upsert user');
             $this->logger->debug(print_r($locationArr, true));
             
@@ -178,14 +236,11 @@ class Connect
         }
         return null;
     }
-    
-    
-    
 
     /**
      * retrieve a list of friends that have connected to the same app.
      * requires special permission
-     * 
+     *
      * @return Ambigous <\Facebook\GraphNodes\GraphEdge, \Facebook\GraphNodes\GraphNode>
      */
     public function retriveFriends()
@@ -197,11 +252,9 @@ class Connect
         return $graphObject;
     }
 
-    
-    
     /**
      * Retrieve the user's absolute friends list
-     * 
+     *
      * @return Ambigous <\Facebook\GraphNodes\GraphEdge, \Facebook\GraphNodes\GraphNode>
      */
     public function retriveAllFriends()
