@@ -1,0 +1,20 @@
+{% extends "admin-layout.twig" %}
+
+{% block content %}
+<h3>By country</h3>
+<table class="table">
+{% for result in cumulative %}
+    {% include "components/result-item.twig" %}
+{% endfor %}
+</table>
+
+<hr/>
+
+<h3>Results</h3>
+<table class="table">
+{% for row in results %}
+{% include "components/result-row.twig" %}
+{% endfor %}
+</table>
+{% endblock %}
+

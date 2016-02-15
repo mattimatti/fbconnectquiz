@@ -212,4 +212,18 @@ final class QuizController
     {
         return $this->view->render($response, 'privacy.twig', $this->viewData);
     }
+
+    
+    /**
+     *
+     * @param Request $request            
+     * @param Response $response            
+     * @param unknown $args            
+     */
+    public function results(Request $request, Response $response, $args)
+    {
+        $this->viewData['results'] = $this->quiz->getResults();
+        $this->viewData['cumulative'] = $this->quiz->getCumulativeResults();
+        return $this->view->render($response, 'results.twig', $this->viewData);
+    }
 }

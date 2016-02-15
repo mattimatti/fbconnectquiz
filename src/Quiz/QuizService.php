@@ -159,4 +159,21 @@ class QuizService
     {
         return $this->getQuiz($quizid)->ownQuizAnswerList[$answerId];
     }
+
+    /**
+     */
+    function getCumulativeResults()
+    {
+        $sql = "select country as name, count(country) as quantity from quiz_user group by country";
+        $data = R::getAll($sql);
+        
+        return $data;
+    }
+
+    /**
+     */
+    function getResults()
+    {
+        return R::findAll(USER);
+    }
 }
