@@ -11,6 +11,10 @@ class QuizService
      */
     function populate()
     {
+        
+        // do not execute this function
+        return;
+        
         R::freeze(false);
         R::nuke();
         
