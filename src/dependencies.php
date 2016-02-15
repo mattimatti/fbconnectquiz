@@ -8,6 +8,20 @@ use App\Facebook\Connect;
 // DIC configuration
 $container = $app->getContainer();
 
+
+
+// Error Handler
+$container['errorHandler'] = function ($c) {
+    return function ($request, $response, $exception) use ($c) {
+        return $c['response']->withStatus(500)
+        ->withHeader('Content-Type', 'text/html')
+        ->write('Something went wrong!');
+    };
+};
+
+
+
+
 // Twig
 $container['view'] = function ($c)
 {
