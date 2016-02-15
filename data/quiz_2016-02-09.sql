@@ -2,7 +2,6 @@
 -- version 3.3.10.4
 -- http://www.phpmyadmin.net
 --
--- Host: mysql.mattimatti.com
 -- Generato il: 15 feb, 2016 at 03:01 AM
 -- Versione MySQL: 5.6.25
 -- Versione PHP: 5.5.26
