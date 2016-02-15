@@ -170,7 +170,7 @@ class Connect
         
         if ($ip != 'unknown') {
             
-            $reader = new Reader('../GeoLite2-Country.mmdb');
+            $reader = new Reader('./GeoLite2-Country.mmdb');
             
             // if (! empty($_SERVER['HTTP_CLIENT_IP'])) {
             // $ip = $_SERVER['HTTP_CLIENT_IP'];
