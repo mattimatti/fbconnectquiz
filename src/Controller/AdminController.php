@@ -83,12 +83,15 @@ final class AdminController
      */
     public function login(Request $request, Response $response, $args)
     {
-        $password = $_POST['password'];
-        
-        if ($password == 'lyrics2016') {
-            $this->session->set('authenticated', 'yes');
-            return $response->withRedirect($this->session->get('original'));
+        if (isset($_POST['password'])) {
+            $password = $_POST['password'];
+            
+            if ($password == 'lyrics2016') {
+                $this->session->set('authenticated', 'yes');
+                return $response->withRedirect($this->session->get('original'));
+            }
         }
+        return $this->view->render($response, 'adminlogin.twig', array());
     }
 
     /**

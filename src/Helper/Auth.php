@@ -50,7 +50,9 @@ class Auth
             $view = $container->get('view');
             $router = $container->get('router');
             
-            return $view->render($response, 'adminlogin.twig', array());
+            return $response->withRedirect($router->pathFor('adminlogin'));
+            
+            //return $view->render($response, 'adminlogin.twig', array());
         } else {
             $response = $next($request, $response);
         }

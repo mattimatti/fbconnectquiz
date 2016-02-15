@@ -209,4 +209,8 @@ final class QuizController
         return $this->view->render($response, 'privacy.twig', $this->viewData);
     }
 
+    public function results(Request $request, Response $response, $args)
+    {
+        return $response->withRedirect($this->router->pathFor('results'));
+    }
 }
