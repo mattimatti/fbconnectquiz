@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Monolog\Logger;
 use Slim\Router;
+use RedBeanPHP\R;
 use App\Helper\Session;
 use App\Quiz\QuizService;
 use App\Facebook\Connect;
@@ -88,7 +89,7 @@ final class QuizController
         
         if (isset($_POST['selection'])) {
             
-           $this->logger->debug('evaluate user selection : ' . $selected);
+            $this->logger->debug('evaluate user selection : ' . $selected);
             
             $selectedAnswer = $this->quiz->getAnswer(1, $selected);
             if ($selectedAnswer) {
@@ -97,7 +98,7 @@ final class QuizController
                 
                 $this->viewData['answer'] = $selectedAnswer;
                 $this->viewData['selecteditem'] = true;
-                $this->viewData['shareurl'] = $this->settings['baseDomain'] .'/shared/'.$selectedAnswer->getId();
+                $this->viewData['shareurl'] = $this->settings['baseDomain'] . '/shared/' . $selectedAnswer->getId();
                 
                 return $this->view->render($response, 'index.twig', $this->viewData);
             }
@@ -115,7 +116,6 @@ final class QuizController
         // }
     }
 
-    
     private function handleRedirect(Response $response)
     {
         if (! $this->facebook->hasAccessToken()) {
@@ -144,9 +144,8 @@ final class QuizController
                 $profile = $this->facebook->retriveProfile();
                 $location = $this->facebook->retriveLocation($profile);
                 
-                //$friends = $this->facebook->retriveFriends();
-                //$allfriends = $this->facebook->retriveAllFriends();
-                
+                // $friends = $this->facebook->retriveFriends();
+                // $allfriends = $this->facebook->retriveAllFriends();
             } catch (\Exception $ex) {
                 
                 $this->logger->error($ex->getMessage());
@@ -154,7 +153,7 @@ final class QuizController
                 return $response->withRedirect($this->router->pathFor('login'));
             }
         }
-
+        
         $this->logger->debug('render quiz page');
         
         $this->viewData['quiz'] = $this->quiz->getOptions(1);
@@ -162,7 +161,6 @@ final class QuizController
         return $this->view->render($response, 'index.twig', $this->viewData);
     }
 
-    
     /**
      *
      * @param Request $request            
@@ -171,11 +169,9 @@ final class QuizController
      */
     public function share(Request $request, Response $response, $args)
     {
-        
-        
         $pos = strrpos($_SERVER['HTTP_USER_AGENT'], "facebook");
         if ($pos === false) { // note: three equal signs
-            return $response->withRedirect($this->router->pathFor('home'));            
+            return $response->withRedirect($this->router->pathFor('home'));
         }
         
         $this->logger->debug(print_r($_SERVER, true));
@@ -185,7 +181,7 @@ final class QuizController
         $this->viewData['quiz'] = $this->quiz->getOptions(1);
         $this->viewData['answer'] = $selectedAnswer;
         $this->viewData['selecteditem'] = true;
-        $this->viewData['shareurl'] = $this->settings['baseDomain'] .'/shared/'.$selectedAnswer->getId();
+        $this->viewData['shareurl'] = $this->settings['baseDomain'] . '/shared/' . $selectedAnswer->getId();
         
         return $this->view->render($response, 'index.twig', $this->viewData);
     }
@@ -213,7 +209,25 @@ final class QuizController
         return $this->view->render($response, 'privacy.twig', $this->viewData);
     }
 
-    
+    /**
+     *
+     * @param Request $request            
+     * @param Response $response            
+     * @param unknown $args            
+     */
+    public function resultsdelete(Request $request, Response $response, $args)
+    {
+        $id = $args['id'];
+        
+        $record = R::load(USER, $id);
+        
+        if ($record) {
+            R::trash($record);
+        }
+        
+        return $response->withRedirect($this->router->pathFor('results'));
+    }
+
     /**
      *
      * @param Request $request            
