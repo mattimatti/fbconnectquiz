@@ -49,7 +49,9 @@
 		var App = App || {};
 
 		var shareUrl = "https://www.facebook.com/dialog/share?app_id={{ settings.facebook.app_id }}&amp;display=touch&amp;href={{ shareurl|url_encode }}&amp;redirect_uri={{ shareurl|url_encode }}";
-		window.location = shareUrl;
+		{% if selecteditem %} 
+		  window.location = shareUrl;
+		{% endif %} 
 		window.fbAsyncInit = function() {
 			FB.init({
 				appId : '{{ settings.facebook.app_id }}',
