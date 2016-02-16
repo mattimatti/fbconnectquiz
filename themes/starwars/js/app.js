@@ -1,9 +1,11 @@
-var FacebookApp = function(scopes, baseUrl) {
+var FacebookApp = function(scopes, baseUrl, shareUrl) {
+	this.shareUrl = shareUrl;
 	this.baseUrl = baseUrl;
 	this.scopes = scopes;
 	this.init();
 	console.debug(this);
 };
+
 
 FacebookApp.prototype.init = function(callback) {
 
@@ -47,10 +49,17 @@ FacebookApp.prototype.share = function(url, callback) {
 	FB.getLoginStatus(function(response) {
 		console.debug('ready to share');
 		if (response.status === 'connected') {
+			
+			// Mobile friendly share dialog
+			if(mobilecheck === true) {
+				window.open(self.shareUrl);
+			}
+			else{
 			FB.ui({
 				method : 'share',
 				href : url
 			}, callback);
+			}
 		}
 	});
 };

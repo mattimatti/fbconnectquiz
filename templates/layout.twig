@@ -39,7 +39,8 @@
 	<script type="text/javascript">
 
 		var App = App || {};
-		
+
+		var shareUrl = "https://www.facebook.com/dialog/share?app_id={{ settings.facebook.app_id }}&display=popup&href={{ shareurl|url_encode }}&redirect_uri={{ shareurl|url_encode }}";
 		
 		window.fbAsyncInit = function() {
 			FB.init({
@@ -48,7 +49,7 @@
 				version : 'v2.5'
 			});
 	
-			App.fb = new FacebookApp({{ permissions|raw }}, '{{ settings.baseDomain }}' );
+			App.fb = new FacebookApp({{ permissions|raw }}, '{{ settings.baseDomain }}', shareUrl );
 			
 		}
 	
