@@ -48,8 +48,8 @@
 	
 		var App = App || {};
 
-		var shareUrl = "https://www.facebook.com/dialog/share?app_id={{ settings.facebook.app_id }}&display=touch&href={{ shareurl }}&redirect_uri={{ shareurl}}";
-		shareUrl = encodeURIComponent(shareUrl);
+		var shareUrl = "app_id={{ settings.facebook.app_id }}&display=touch&href={{ shareurl }}&redirect_uri={{ shareurl}}";
+		shareUrl = "https://www.facebook.com/dialog/share?" + encodeURIComponent(shareUrl);
         {% if selecteditem %} 
 		  window.location.href = shareUrl;
 		{% endif %} 
