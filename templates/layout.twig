@@ -50,7 +50,7 @@
 
 		//var shareUrl = "https://www.facebook.com/dialog/share?app_id={{ settings.facebook.app_id }}&display=touch&href={{ shareurl }}&redirect_uri={{ shareurl     }}";
 
-		var shareUrl = "https://www.facebook.com/dialog/share?app_id={{ settings.facebook.app_id }}&amp;display=popup&amp;href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2F&amp;redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fexplorer";
+		var shareUrl = "https://www.facebook.com/dialog/share?app_id={{ settings.facebook.app_id }}&display=popup&href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2F&redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fexplorer";
         {% if selecteditem %} 
 		  window.location.href = shareUrl;
 		{% endif %} 
