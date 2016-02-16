@@ -45,11 +45,10 @@
 		};
 	
 		window.mobilecheck = window.checkMobile();
-
 	
 		var App = App || {};
 
-		var shareUrl = "https://www.facebook.com/dialog/share?app_id={{ settings.facebook.app_id }}&display=popup&href={{ shareurl|url_encode }}&redirect_uri={{ shareurl|url_encode }}";
+		var shareUrl = "https://www.facebook.com/dialog/share?app_id={{ settings.facebook.app_id }}&display=touch&href={{ shareurl|url_encode }}&redirect_uri={{ shareurl|url_encode }}";
 		
 		window.fbAsyncInit = function() {
 			FB.init({

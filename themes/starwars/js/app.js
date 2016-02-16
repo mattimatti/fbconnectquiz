@@ -52,7 +52,6 @@ FacebookApp.prototype.share = function(url, callback) {
 			
 			// Mobile friendly share dialog
 			if(window.mobilecheck === true) {
-				alert('is mobile!');
 				window.open(self.shareUrl);
 			}
 			else{
