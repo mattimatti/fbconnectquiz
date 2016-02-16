@@ -10244,7 +10244,7 @@ FacebookApp.prototype.share = function(url, callback) {
 			
 			// Mobile friendly share dialog
 			if(window.mobilecheck === true) {
-				window.open(self.shareUrl);
+				window.location.href = self.shareUrl;
 			}
 			else{
 			FB.ui({
