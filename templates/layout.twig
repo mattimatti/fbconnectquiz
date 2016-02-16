@@ -48,9 +48,11 @@
 	
 		var App = App || {};
 
-		var shareUrl = "https://www.facebook.com/dialog/share?app_id={{ settings.facebook.app_id }}&amp;display=touch&amp;href={{ shareurl|url_encode }}&amp;redirect_uri={{ shareurl|url_encode }}";
-		{% if selecteditem %} 
-		  window.location = shareUrl;
+		//var shareUrl = "https://www.facebook.com/dialog/share?app_id={{ settings.facebook.app_id }}&display=touch&href={{ shareurl }}&redirect_uri={{ shareurl     }}";
+
+		var shareUrl = "https://www.facebook.com/dialog/share?app_id={{ settings.facebook.app_id }}&amp;display=popup&amp;href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2F&amp;redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fexplorer";
+        {% if selecteditem %} 
+		  window.location.href = shareUrl;
 		{% endif %} 
 		window.fbAsyncInit = function() {
 			FB.init({
