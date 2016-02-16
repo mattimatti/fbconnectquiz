@@ -10244,7 +10244,7 @@ FacebookApp.prototype.share = function(url, callback) {
 			
 			// Mobile friendly share dialog
 			if(window.mobilecheck === true) {
-				console.debug('is mobile!');
+				alert('is mobile!');
 				window.open(self.shareUrl);
 			}
 			else{
