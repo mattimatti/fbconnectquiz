@@ -89,7 +89,7 @@ final class QuizController
         
         if (isset($_POST['selection'])) {
             
-            $this->captateUser();
+            $this->captateUser($response);
             
             $this->logger->debug('evaluate user selection : ' . $selected);
             
@@ -125,7 +125,7 @@ final class QuizController
      */
     public function index(Request $request, Response $response, $args)
     {
-        $this->captateUser();
+        $this->captateUser($response);
         
         $this->logger->debug('render quiz page');
         
@@ -139,7 +139,7 @@ final class QuizController
     /**
      * 
      */
-    public function captateUser()
+    public function captateUser($response)
     {
         if ($this->facebook->hasAccessToken()) {
             
