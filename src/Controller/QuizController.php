@@ -90,7 +90,7 @@ final class QuizController
         if (isset($_POST['selection'])) {
             
             if (! $this->captateUser($response)) {
-                return $response->withRedirect($this->router->pathFor('login'));
+                return $response->withRedirect($this->router->pathFor('home'));
             }
             
             $this->logger->debug('evaluate user selection : ' . $selected);
@@ -128,7 +128,7 @@ final class QuizController
     public function index(Request $request, Response $response, $args)
     {
         if (! $this->captateUser()) {
-            return $response->withRedirect($this->router->pathFor('login'));
+            return $response->withRedirect($this->router->pathFor('home'));
         }
         
         $this->logger->debug('render quiz page');
