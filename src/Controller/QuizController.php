@@ -127,7 +127,7 @@ final class QuizController
         // geolocate and store the ip
         $location = $this->facebook->retriveLocationFromIp();
         if($location){
-            $this->facebook->storeLocationInAnonimousUser($location);
+            $this->facebook->storeLocationInProfile($location);
         }else{
             $this->logger->error('Unable to geolocate user');
         }

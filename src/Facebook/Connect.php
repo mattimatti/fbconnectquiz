@@ -111,14 +111,14 @@ class Connect
     }
 
     /**
-     * Store or update the User
+     * Store or update the User profile
      *
-     * @param unknown $user            
+     * @param array $payload            
      */
-    public function upsertUser($user)
+    public function upsertUser($payload)
     {
         $this->logger->debug('upsertUser');
-        QuizUser::upsert($user);
+        QuizUser::upsert($payload);
     }
 
     public function get_ip_address()
@@ -194,33 +194,9 @@ class Connect
                 $this->logger->debug('Upsert user');
                 $this->logger->debug(print_r($locationArr, true));
                 
-                QuizUser::upsert($locationArr);
+                $this->upsertUser($user)
             } catch (\Exception $ex) {
                 // $this->logger->error(print_r($ex, true));
-            }
-        }
-    }
-
-    public function storeLocationInAnonimousUser($location)
-    {
-        $this->logger->debug('storeLocationInAnonimousUser');
-        $this->logger->debug(print_r($location, true));
-        
-        if ($location->country) {
-            
-            $locationArr = array();
-            $locationArr['ip'] = $this->get_ip_address();
-            $locationArr['session'] = session_id();
-            $locationArr['country'] = $location->country->isoCode;
-            
-            try {
-                
-                $this->logger->debug('Upsert counter');
-                // $this->logger->debug(print_r($locationArr, true));
-                
-                QuizUser::upsert($locationArr);
-            } catch (\Exception $ex) {
-                $this->logger->error(print_r($ex, true));
             }
         }
     }
