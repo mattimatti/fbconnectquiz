@@ -89,14 +89,15 @@ class Connect
      */
     public function retriveProfile()
     {
-        $this->logger->debug('retriveProfile ' . "/me?fields=id,name,email,gender,location");
+        $this->logger->debug('retriveProfile ' . "/me?fields=id,name,email,gender");
         
-        $response = $this->facebook->get("/me?fields=id,name,email,gender,location", $this->getAccessToken());
+        $response = $this->facebook->get("/me?fields=id,name,email,gender", $this->getAccessToken());
         $this->user = $response->getGraphUser();
         
         $userArray = json_decode($this->user->asJson(), true);
         $this->logger->debug(print_r($userArray, true));
         
+        // remove location info if set.
         if (isset($userArray['location'])) {
             unset($userArray['location']);
         }
@@ -141,17 +142,8 @@ class Connect
                 }
             }
         }
+        // return '87.8.80.102';
         return 'unknown';
-    }
-
-    /**
-     *
-     * @param array $profile            
-     */
-    public function retriveLocation($profile)
-    {
-        return $this->retriveLocationFromIp($profile);
-        // return $this->retriveLocationFromFacebookApi($profile);
     }
 
     /**
@@ -159,111 +151,78 @@ class Connect
      *
      * @param array $profile            
      */
-    public function retriveLocationFromIp($profile)
+    public function retriveLocationFromIp()
     {
-        $this->logger->debug('retriveLocationFromIp');
-        $this->logger->debug(print_r($profile, true));
-        
-        $profileArr = json_decode($profile->asJson(), true);
-        
         $ip = $this->get_ip_address();
+        
+        $this->logger->debug('retriveLocationFromIp ' . $ip);
         
         if ($ip != 'unknown') {
             
-            $reader = new Reader('./GeoLite2-Country.mmdb');
-            
-            // if (! empty($_SERVER['HTTP_CLIENT_IP'])) {
-            // $ip = $_SERVER['HTTP_CLIENT_IP'];
-            // } elseif (! empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            // $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-            // } else {
-            // $ip = $_SERVER['REMOTE_ADDR'];
-            // }
-            
-            $record = $reader->country($ip);
-            
-            if ($record->country) {
+            try {
                 
-                $locationArr = array();
-                $locationArr['id'] = $profileArr['id'];
-                $locationArr['ip'] = $ip;
-                $locationArr['city'] = $record->country->name;
-                $locationArr['country'] = $record->country->isoCode;
-                $locationArr['latitude'] = '';
-                $locationArr['longitude'] = '';
+                $reader = new Reader('./GeoLite2-Country.mmdb');
+                $location = $reader->country($ip);
+                return $location;
+            } catch (\Exception $ex) {
+                //
+            }
+        } else {
+            $this->logger->debug('unable to retrive user IP');
+        }
+        
+        return null;
+    }
+
+    public function storeLocationInProfile($location)
+    {
+        $this->logger->debug('storeLocationInProfile');
+        $this->logger->debug(print_r($location, true));
+        
+        if ($location->country) {
+            
+            $locationArr = array();
+            $locationArr['session'] = session_id();
+            $locationArr['ip'] = $location->traits->ipAddress;
+            $locationArr['city'] = $location->country->name;
+            $locationArr['country'] = $location->country->isoCode;
+            $locationArr['latitude'] = '';
+            $locationArr['longitude'] = '';
+            
+            try {
                 
                 $this->logger->debug('Upsert user');
                 $this->logger->debug(print_r($locationArr, true));
                 
                 QuizUser::upsert($locationArr);
+            } catch (\Exception $ex) {
+                // $this->logger->error(print_r($ex, true));
             }
         }
     }
 
-    /**
-     *
-     * @param array $profile
-     *            The user profile.
-     * @return Ambigous <\Facebook\GraphNodes\GraphEdge, \Facebook\GraphNodes\GraphNode>|NULL
-     */
-    public function retriveLocationFromFacebookApi($profile)
+    public function storeLocationInAnonimousUser($location)
     {
-        $this->logger->debug('retriveLocationFromFacebookApi');
-        $this->logger->debug(print_r($profile, true));
+        $this->logger->debug('storeLocationInAnonimousUser');
+        $this->logger->debug(print_r($location, true));
         
-        $profileArr = json_decode($profile->asJson(), true);
-        
-        if (isset($profileArr['location']['id'])) {
+        if ($location->country) {
             
-            $locationid = $profileArr['location']['id'];
+            $locationArr = array();
+            $locationArr['ip'] = $this->get_ip_address();
+            $locationArr['session'] = session_id();
+            $locationArr['country'] = $location->country->isoCode;
             
-            $response = $this->facebook->get($locationid . '?fields=location', $this->getAccessToken());
-            $graphObject = $response->getGraphObject();
-            
-            $graphArr = json_decode($graphObject->asJson(), true);
-            
-            $locationArr = $graphArr['location'];
-            
-            unset($locationArr['id']);
-            $locationArr['id'] = $profileArr['id'];
-            
-            $this->logger->debug('Upsert user');
-            $this->logger->debug(print_r($locationArr, true));
-            
-            QuizUser::upsert($locationArr);
-            
-            return $graphObject;
+            try {
+                
+                $this->logger->debug('Upsert counter');
+                // $this->logger->debug(print_r($locationArr, true));
+                
+                QuizUser::upsert($locationArr);
+            } catch (\Exception $ex) {
+                $this->logger->error(print_r($ex, true));
+            }
         }
-        return null;
-    }
-
-    /**
-     * retrieve a list of friends that have connected to the same app.
-     * requires special permission
-     *
-     * @return Ambigous <\Facebook\GraphNodes\GraphEdge, \Facebook\GraphNodes\GraphNode>
-     */
-    public function retriveFriends()
-    {
-        $this->logger->debug('retriveFriends');
-        $response = $this->facebook->get('/me/friends', $this->getAccessToken());
-        $graphObject = $response->getGraphEdge();
-        $this->logger->debug($graphObject->asJson());
-        return $graphObject;
-    }
-
-    /**
-     * Retrieve the user's absolute friends list
-     *
-     * @return Ambigous <\Facebook\GraphNodes\GraphEdge, \Facebook\GraphNodes\GraphNode>
-     */
-    public function retriveAllFriends()
-    {
-        $this->logger->debug('retriveAllFriends');
-        $response = $this->facebook->get('/me/friendlists', $this->getAccessToken());
-        $graphObject = $response->getGraphEdge();
-        $this->logger->debug($graphObject->asJson());
-        return $graphObject;
     }
 
     /**

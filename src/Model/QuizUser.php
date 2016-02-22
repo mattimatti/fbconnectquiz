@@ -14,16 +14,35 @@ class QuizUser extends SimpleModel
      */
     public static function upsert($payload)
     {
-//         R::freeze(false);
         
-        // change the id into fbid.
-        $payload['fbid'] = '' .$payload['id'];
-        unset($payload['id']);
+        R::freeze(false);
         
-        // Find an existing user in db
-        $user = R::findOne(USER, 'fbid = :fbid ', array(
-            ':fbid' => $payload['fbid']
-        ));
+        // if no session set add it
+        if(!isset($payload['session'])){
+            $payload['session'] = session_id();
+        }
+        
+        // if we have a payload with id set the facebook id
+        if(isset($payload['id'])){
+            // change the id into fbid.
+            $payload['fbid'] = '' . $payload['id'];
+            unset($payload['id']);
+            
+            // Find an existing user in db by facebook id
+            $user = R::findOne(USER, 'fbid = :fbid ', array(
+                ':fbid' => $payload['fbid']
+            ));
+            
+        }else{
+            
+            // Find an existing user in db by session
+            $user = R::findOne(USER, 'session = :session ', array(
+                ':session' => $payload['session']
+            ));
+        }
+        
+        
+       
         
         // the date
         $currentDate = new \DateTime();
@@ -35,9 +54,6 @@ class QuizUser extends SimpleModel
         
         $user->import($payload);
         
-//         print_r($user);
-//         exit();
-
         // update the lastupdated timestamp
         
         $user->lastupdate = $currentDate->format('Y-m-d H:i:s');

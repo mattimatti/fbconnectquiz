@@ -107,14 +107,6 @@ final class QuizController
         return $response->withRedirect($this->router->pathFor('home'));
     }
 
-    /**
-     */
-    private function handleLogin()
-    {
-        // if (! $this->facebook->hasAccessToken()) {
-        // return $response->withRedirect($this->router->pathFor('login'));
-        // }
-    }
 
     private function handleRedirect(Response $response)
     {
@@ -131,7 +123,14 @@ final class QuizController
      */
     public function index(Request $request, Response $response, $args)
     {
-        $this->handleLogin();
+        
+        // geolocate and store the ip
+        $location = $this->facebook->retriveLocationFromIp();
+        if($location){
+            $this->facebook->storeLocationInAnonimousUser($location);
+        }else{
+            $this->logger->error('Unable to geolocate user');
+        }
         
         if ($this->facebook->hasAccessToken()) {
             
@@ -141,14 +140,12 @@ final class QuizController
                 
                 $this->logger->debug('facebook load data');
                 
+                // load and store profile.
                 $profile = $this->facebook->retriveProfile();
-                $location = $this->facebook->retriveLocation($profile);
                 
-                // $friends = $this->facebook->retriveFriends();
-                // $allfriends = $this->facebook->retriveAllFriends();
             } catch (\Exception $ex) {
                 
-                $this->logger->error($ex->getMessage());
+                $this->logger->error($_SERVER['HTTP_USER_AGENT'] .' - '. $ex->getMessage());
                 
                 return $response->withRedirect($this->router->pathFor('login'));
             }
