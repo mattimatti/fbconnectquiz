@@ -143,7 +143,7 @@ final class QuizController
      * @param unknown $response
      * @return boolean
      */
-    public function captateUser($response)
+    public function captateUser()
     {
         if ($this->facebook->hasAccessToken()) {
             
