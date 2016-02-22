@@ -213,6 +213,19 @@ final class QuizController
         return $response->withRedirect($this->router->pathFor('login'));
     }
 
+    
+    /**
+     *
+     * @param Request $request            
+     * @param Response $response            
+     * @param unknown $args            
+     */
+    public function alter(Request $request, Response $response, $args)
+    {
+        $data = $this->quiz->alter();
+        return $response->withRedirect($this->router->pathFor('home'));
+    }
+
     /**
      *
      * @param Request $request            

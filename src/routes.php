@@ -7,6 +7,7 @@ $app->get('/login', 'App\Controller\AuthController:login')->setName('login');
 
 $app->get('/privacy', 'App\Controller\QuizController:privacy')->setName('privacy');
 $app->get('/install', 'App\Controller\QuizController:install')->setName('install');
+$app->get('/alter', 'App\Controller\QuizController:alter')->setName('install');
 
 $app->get('/xyz', 'App\Controller\QuizController:results');
 
