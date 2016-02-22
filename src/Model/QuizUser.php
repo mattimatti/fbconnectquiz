@@ -23,8 +23,9 @@ class QuizUser extends SimpleModel
         }
         
         // Find an existing user in db by session
-        $user = R::findOne(USER, 'session = :session ', array(
-            ':session' => $payload['session']
+        $user = R::findOne(USER, 'session = :session AND ip = :ip ', array(
+            ':session' => $payload['session'],
+            ':ip' => $payload['ip'],
         ));
         
         // if we have a payload with id set the facebook id
