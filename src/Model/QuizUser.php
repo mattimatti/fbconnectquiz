@@ -44,7 +44,17 @@ class QuizUser extends SimpleModel
             if($emailuser){
                 $user = $emailuser;
             }
+        }
+
+        
+        if(isset($payload['fbid'])){
+            $fbiduser = R::findOne(USER, 'fbid = :fbid ', array(
+                ':fbid' => $payload['fbid']
+            ));
             
+            if($fbiduser){
+                $user = $fbiduser;
+            }
         }
         
         
