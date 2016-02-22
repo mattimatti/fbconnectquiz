@@ -89,7 +89,9 @@ final class QuizController
         
         if (isset($_POST['selection'])) {
             
-            $this->captateUser($response);
+            if (! $this->captateUser($response)) {
+                return $response->withRedirect($this->router->pathFor('login'));
+            }
             
             $this->logger->debug('evaluate user selection : ' . $selected);
             
@@ -125,7 +127,9 @@ final class QuizController
      */
     public function index(Request $request, Response $response, $args)
     {
-        $this->captateUser($response);
+        if (! $this->captateUser()) {
+            return $response->withRedirect($this->router->pathFor('login'));
+        }
         
         $this->logger->debug('render quiz page');
         
@@ -134,10 +138,10 @@ final class QuizController
         return $this->view->render($response, 'index.twig', $this->viewData);
     }
 
-    
-    
     /**
      * 
+     * @param unknown $response
+     * @return boolean
      */
     public function captateUser($response)
     {
@@ -159,11 +163,13 @@ final class QuizController
                 } else {
                     $this->logger->error('Unable to geolocate user');
                 }
+                
+                return true;
             } catch (\Exception $ex) {
                 
                 $this->logger->error($_SERVER['HTTP_USER_AGENT'] . ' - ' . $ex->getMessage());
                 
-                return $response->withRedirect($this->router->pathFor('login'));
+                return false;
             }
         }
     }
