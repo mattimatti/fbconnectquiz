@@ -124,17 +124,18 @@ final class QuizController
     public function index(Request $request, Response $response, $args)
     {
         
-        // geolocate and store the ip
-        $location = $this->facebook->retriveLocationFromIp();
-        if($location){
-            $this->facebook->storeLocationInProfile($location);
-        }else{
-            $this->logger->error('Unable to geolocate user');
-        }
-        
         if ($this->facebook->hasAccessToken()) {
             
             $this->logger->debug('user has access token : ' . $this->facebook->getAccessToken());
+            
+            
+            // geolocate and store the ip
+            $location = $this->facebook->retriveLocationFromIp();
+            if($location){
+                $this->facebook->storeLocationInProfile($location);
+            }else{
+                $this->logger->error('Unable to geolocate user');
+            }
             
             try {
                 
