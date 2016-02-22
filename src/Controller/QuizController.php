@@ -92,6 +92,7 @@ final class QuizController
             $this->logger->debug('evaluate user selection : ' . $selected);
             
             $selectedAnswer = $this->quiz->getAnswer(1, $selected);
+            
             if ($selectedAnswer) {
                 
                 $this->logger->debug('Found answer, display result');
@@ -123,19 +124,9 @@ final class QuizController
      */
     public function index(Request $request, Response $response, $args)
     {
-        
         if ($this->facebook->hasAccessToken()) {
             
             $this->logger->debug('user has access token : ' . $this->facebook->getAccessToken());
-            
-            
-            // geolocate and store the ip
-            $location = $this->facebook->retriveLocationFromIp();
-            if($location){
-                $this->facebook->storeLocationInProfile($location);
-            }else{
-                $this->logger->error('Unable to geolocate user');
-            }
             
             try {
                 
@@ -143,6 +134,17 @@ final class QuizController
                 
                 // load and store profile.
                 $profile = $this->facebook->retriveProfile();
+                
+                
+                // geolocate and store the ip
+                $location = $this->facebook->retriveLocationFromIp();
+                if($location){
+                    $this->facebook->storeLocationInProfile($location);
+                }else{
+                    $this->logger->error('Unable to geolocate user');
+                }
+                
+                
                 
             } catch (\Exception $ex) {
                 

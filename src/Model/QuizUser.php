@@ -32,19 +32,7 @@ class QuizUser extends SimpleModel
             // change the id into fbid.
             $payload['fbid'] = '' . $payload['id'];
             unset($payload['id']);
-            
-//             // Find an existing user in db by facebook id
-//             $user = R::findOne(USER, 'fbid = :fbid ', array(
-//                 ':fbid' => $payload['fbid']
-//             ));
-            
-        }else{
-            
-            
         }
-        
-        
-       
         
         // the date
         $currentDate = new \DateTime();
