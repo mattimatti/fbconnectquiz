@@ -164,7 +164,7 @@ class QuizService
      */
     function getCumulativeResults()
     {
-        $sql = "select country as name, count(country) as quantity from quiz_user group by country";
+        $sql = "select country as name, count(country) as quantity from quiz_user where email !='' group by country";
         $data = R::getAll($sql);
         
         return $data;
@@ -174,6 +174,6 @@ class QuizService
      */
     function getResults()
     {
-        return R::findAll(USER);
+        return R::find(USER, "where email !='' ");
     }
 }
