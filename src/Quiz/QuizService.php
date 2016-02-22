@@ -12,7 +12,7 @@ class QuizService
     function alter()
     {
         R::freeze(true);
-        R::exec('ALTER TABLE `quiz_user` ADD `session` VARCHAR(191)  NULL  DEFAULT NULL  AFTER `session`;');
+        R::exec('ALTER TABLE `quiz_user` ADD `session` VARCHAR(191)  NULL  DEFAULT NULL;');
     }
 
      /**
