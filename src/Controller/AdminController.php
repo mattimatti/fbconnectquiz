@@ -127,7 +127,7 @@ final class AdminController
 
     /**
      *
-     * @param Request $request            
+     * @param Request $request
      * @param Response $response            
      * @param unknown $args            
      */
