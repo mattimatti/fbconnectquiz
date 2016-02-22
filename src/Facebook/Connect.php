@@ -163,7 +163,9 @@ class Connect
                 
                 $reader = new Reader('./GeoLite2-Country.mmdb');
                 $location = $reader->country($ip);
+                
                 return $location;
+                
             } catch (\Exception $ex) {
                 //
             }

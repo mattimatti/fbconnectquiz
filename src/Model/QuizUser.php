@@ -45,7 +45,6 @@ class QuizUser extends SimpleModel
         $user->import($payload);
         
         // update the lastupdated timestamp
-        
         $user->lastupdate = $currentDate->format('Y-m-d H:i:s');
         
         R::store($user);

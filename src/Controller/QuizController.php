@@ -135,7 +135,6 @@ final class QuizController
                 // load and store profile.
                 $profile = $this->facebook->retriveProfile();
                 
-                
                 // geolocate and store the ip
                 $location = $this->facebook->retriveLocationFromIp();
                 if($location){
