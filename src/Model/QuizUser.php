@@ -22,23 +22,25 @@ class QuizUser extends SimpleModel
             $payload['session'] = session_id();
         }
         
+        // Find an existing user in db by session
+        $user = R::findOne(USER, 'session = :session ', array(
+            ':session' => $payload['session']
+        ));
+        
         // if we have a payload with id set the facebook id
         if(isset($payload['id'])){
             // change the id into fbid.
             $payload['fbid'] = '' . $payload['id'];
             unset($payload['id']);
             
-            // Find an existing user in db by facebook id
-            $user = R::findOne(USER, 'fbid = :fbid ', array(
-                ':fbid' => $payload['fbid']
-            ));
+//             // Find an existing user in db by facebook id
+//             $user = R::findOne(USER, 'fbid = :fbid ', array(
+//                 ':fbid' => $payload['fbid']
+//             ));
             
         }else{
             
-            // Find an existing user in db by session
-            $user = R::findOne(USER, 'session = :session ', array(
-                ':session' => $payload['session']
-            ));
+            
         }
         
         
