@@ -33,6 +33,21 @@ class QuizUser extends SimpleModel
             $payload['fbid'] = '' . $payload['id'];
             unset($payload['id']);
         }
+
+        
+        if(isset($payload['email'])){
+            $emailuser = R::findOne(USER, 'email = :email ', array(
+                ':email' => $payload['email']
+            ));
+            
+            if($emailuser){
+                $user = $emailuser;
+            }
+            
+        }
+        
+        
+        
         
         // the date
         $currentDate = new \DateTime();
