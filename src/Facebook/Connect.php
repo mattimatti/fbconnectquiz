@@ -177,7 +177,7 @@ class Connect
     public function storeLocationInProfile($location)
     {
         $this->logger->debug('storeLocationInProfile');
-        $this->logger->debug(print_r($location, true));
+        //$this->logger->debug(print_r($location, true));
         
         if ($location->country) {
             
