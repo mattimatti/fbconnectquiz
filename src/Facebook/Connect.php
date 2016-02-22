@@ -194,7 +194,7 @@ class Connect
                 $this->logger->debug('Upsert user');
                 $this->logger->debug(print_r($locationArr, true));
                 
-                $this->upsertUser($user)
+                $this->upsertUser($locationArr);
             } catch (\Exception $ex) {
                 // $this->logger->error(print_r($ex, true));
             }
