@@ -34,6 +34,9 @@ if ($isStaging) {
 // print_r($settings);
 // exit();
 
+// set this header for facebook cookie saving.
+header('P3P: CP="IDC DSP COR CURa ADMa OUR IND PHY ONL COM STA"');
+
 $app = new \Slim\App($settings);
 
 // Set up dependencies
